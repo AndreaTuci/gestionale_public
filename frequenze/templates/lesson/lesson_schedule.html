@@ -1,0 +1,109 @@
+<div class="my-4">
+    {% for course in course_list %}
+        <button class='btn btn-outline-dark rounded-0 d-print-none'
+                hx-get="{% url 'lesson-schedule' course.pk %}"
+                hx-target="#replaceMe"
+                hx-swap="outerHTML">
+             {{ course }}
+        </button>
+    {% endfor %}
+
+    </div>
+
+<div id="replaceMe" class="container-fluid">
+
+    {% if course > 0 %}
+        <div class="d-print-none">{% include 'lesson/lesson_add.html' %}
+            {% if messages %}
+                <div class="alert alert-danger">
+                    <h4>Non è possibile inserire la lezione:</h4>
+                    {% for message in messages %}
+                        <p{% if message.tags %} class="{{ message.tags }}"{% endif %}>{{ message }}</p>
+                    {% endfor %}
+                </div>
+{% endif %}</div>
+            <div class="d-flex align-content-center">
+                <div class="mt-2 text-center"><h3>ORARIO DEL CORSO {{ course_name }} </h3></div>
+                <button class='btn btn-outline-dark rounded-0 d-print-none ml-5'
+                        data-toggle="modal" data-target="#sendConfirmModal"
+                        >
+                     INVIA L'ORARIO
+                </button>
+            </div>
+
+    <div class="row text-center">
+        <div class="col-2 border-right">
+            <div style="height: 50px" class="row">
+                <div class="col pt-3">
+                    &nbsp;
+                </div>
+            </div>
+            {% for hour in schedule.hours %}
+            <div style="height: 50px" class="row border-top">
+                <div class="col pt-3">
+                    {{ hour }}
+                </div>
+            </div>
+            {% endfor %}
+        </div>
+
+        <!-- Modal -->
+{#onclick="window.location.href='{% url 'send-schedule' course %}'"type="submit"#}
+
+    <div class="modal fade" id="sendConfirmModal" tabindex="-1" role="dialog" aria-labelledby="saveConfirmModalLabel" aria-hidden="true">
+      <div class="modal-dialog" role="document">
+        <div class="modal-content">
+          <div class="modal-header">
+            <h5 class="modal-title" id="saveConfirmModalLabel">Conferma di invio</h5>
+            <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+              <span aria-hidden="true">&times;</span>
+            </button>
+          </div>
+          <div class="modal-body" id="modalBody">
+              <p>Una volta inviato l'orario sarà visibile agli studenti!</p>
+              <p><strong>Confermi?</strong></p>
+
+          </div>
+          <div class="modal-footer">
+              <button type="button"
+                      class="btn btn-outline-danger mt-3 rounded-0"
+                      data-dismiss="modal">
+                  No
+              </button>
+              <button type="submit"
+                      class="btn btn btn-outline-info ml-auto mt-3 rounded-0"
+                      onclick="window.location.href='{% url 'send-schedule' course %}'">
+                  Invia
+              </button>
+          </div>
+        </div>
+      </div>
+    </div>
+
+        {% endif %}
+        {% for day in schedule.days %}
+            {% if day == 'Lun' %}
+                {% include 'lesson/include/daily_lessons.html' with selected_day=day lessons=schedule.Lun.items%}
+            {% elif day == 'Mar' %}
+                {% include 'lesson/include/daily_lessons.html' with selected_day=day lessons=schedule.Mar.items%}
+            {% elif day == 'Mer' %}
+                {% include 'lesson/include/daily_lessons.html' with selected_day=day lessons=schedule.Mer.items%}
+            {% elif day == 'Gio' %}
+                {% include 'lesson/include/daily_lessons.html' with selected_day=day lessons=schedule.Gio.items%}
+            {% elif day == 'Ven' %}
+                {% include 'lesson/include/daily_lessons.html' with selected_day=day lessons=schedule.Ven.items%}
+            {% endif %}
+        {% endfor %}
+
+
+    </div>
+</div>
+
+
+
+<!--<script>
+    var lastname = sessionStorage.getItem('schedule_form_error');
+    console.log(lastname)
+    document.addEventListener('click',sessionStorage.removeItem("schedule_form_error"))
+
+</script>-->

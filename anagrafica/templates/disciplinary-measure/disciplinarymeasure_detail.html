@@ -1,0 +1,30 @@
+{% extends 'base.html' %}
+{% block content %}
+<div class="container-fluid mt-3">
+    <h3>
+        Segnalazione del {{ disciplinarymeasure.reporting_date }} <a href="{% url 'disciplinarymeasure-update' disciplinarymeasure.pk %}"><i style="font-size: large" class="fas fa-edit mr-2 d-print-none"></i></a></h3>
+    <h4 class="mt-5">Studenti coinvolti:</h4>
+    <p>
+        {% for student in disciplinarymeasure.students.all %}
+            <a href="{% url 'disciplinarymeasure-list-by-student' student.pk %}">{{ student }}</a>
+        {% endfor %}
+    </p>
+    <hr>
+    <h4>Provvedimento:</h4>
+    <p>Tipo di provvedimento proposto: <strong>{{ disciplinarymeasure.note_type }}</strong></p>
+    <p>DOCENTE:
+    {% if disciplinarymeasure.teacher_reporting %}
+        <strong>{{ disciplinarymeasure.teacher_reporting }}</strong></p>
+    {% else %}
+        <span class="text-danger">[docente non in anagrafe]</span></p>
+    {% endif %}
+    <p>TUTOR: <strong>{{ disciplinarymeasure.tutor_reporting }}</strong></p>
+    <hr>
+    <h4>Contenuto della segnalazione:</h4>
+    <p>{{ disciplinarymeasure.motivation }}</p>
+
+</div>
+{% endblock content %}
+
+
+

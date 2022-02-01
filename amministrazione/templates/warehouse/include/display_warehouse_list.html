@@ -1,0 +1,24 @@
+<tbody class="text-center"
+       hx-confirm="Sicuro di voler eliminare il contratto?"
+       hx-target="this"
+       hx-swap="outerHTML swap:500ms">
+    {% for material in list %}
+        <tr>
+            <!--<td>
+                <a href='#'
+                   class="mx-2 text-danger"
+                   hx-delete="">
+                    <i class="fal fa-trash-alt"></i></a>
+            </td>
+            <td>
+                <a href=""><i class="fal fa-file-user"></i></a>
+            </td>-->
+            <td>{{ material.barcode }}</td>
+            <td>{{ material.name}}</td>
+            <td>{{ material.brand }}</td>
+            <td>{{ material.quantity }}</td>
+            <td>€ {{ material.price|floatformat:2 }}</td>
+            <td>[{{ material.get_last_movement.movement_type }}] {{ material.get_last_movement.movement_date }}</td>
+        </tr>
+    {% endfor %}
+</tbody>

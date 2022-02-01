@@ -1,0 +1,52 @@
+{% load crispy_forms_tags %}
+
+<form method="post" class="form p-3 m-2" hx-post="{% url 'new-lesson-add' course ref_date %}" hx-target="#replaceMe" hx-swap="outerHTML">
+    {% for key, error_list in request.session.schedule_form_error.items %}
+        <div class="alert alert-danger" role="alert">
+            {% for error in error_list %}
+                {{error}}
+            {% endfor %}
+        </div>
+    {% endfor %}
+{% for error in form.errors %}
+{{ error }}
+{% endfor %}
+{#    {% if request.session.teacher_attendance_saved %}#}
+{#        <div class="alert alert-success" role="alert">#}
+{#            {{ request.session.teacher_attendance_saved }}#}
+{#        </div>#}
+{#    {% endif %}#}
+    {% csrf_token %}
+    {{ form|as_crispy_errors }}
+
+            <div class="d-flex">
+                <div class="mr-2">
+                    {{ form.day|as_crispy_field }}
+                </div>
+                <div class="mr-2">
+                    {{ form.hour|as_crispy_field }}
+                </div>
+                <div class="mr-2">
+                    {{ form.training_unit|as_crispy_field }}
+                </div>
+                <div class="mr-2" >
+                    {{ form.classroom|as_crispy_field }}
+                </div>
+                <button style="height: 55px; width: 55px" class="btn btn-lg btn-outline-dark rounded-circle ml-3 mt-3"><i class="fal my-0 py-0 fa-save"></i></button>
+
+            </div>
+
+
+</form>
+
+{# onclick="filterClassrooms(this.value)"  #}
+{#<script>#}
+{#    filterClassrooms = (classrooms)=>{#}
+{#        var x = document.getElementById("classroomID")#}
+{#        console.log(x.options)#}
+{#        console.log('Lei ha cliccato')#}
+{##}
+{#    }#}
+{##}
+{##}
+{#</script>#}

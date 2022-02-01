@@ -1,0 +1,7 @@
+﻿Librerie installate per far funzionare psycopg2 e django-heroku:
+
+sudo apt-get install python-dev
+
+sudo apt-get install libpq-dev python-dev libxml2-dev libxslt1-dev libldap2-dev libsasl2-dev libffi-dev
+
+sudo apt-get install gcc – con questa ho risolto

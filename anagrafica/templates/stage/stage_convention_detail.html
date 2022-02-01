@@ -1,0 +1,317 @@
+{% extends 'base.html' %}
+{% load static %}
+
+{% block content %}
+    <div class="divFooter ml-5"><img style="width: 90%" src="{% static "images/footer_carta_intestata.png" %}" alt=""></div>
+    <head>
+        <title>{{ student.surname }}_{{ student.name }}</title>
+    </head>
+<div class="container-fluid mt-3">
+    <div class="row border">
+        <div class="col-2 border-right">
+            <p class="text-center mt-3"> Centro di Formazione Professionale Don Giulio Facibeni</p>
+        </div>
+        <div class="col-8 text-center">
+            <h2 class="mt-3">
+                <a class="d-print-none" href="{% url 'stage-detail' stage.pk %}"><i class="fal fa-chevron-circle-left"></i></a>
+                CONVENZIONE ALTERNANZA SCUOLA LAVORO</h2>
+            <p>Studente: <strong>{{ student.name }} {{ student.surname }}</strong> - Corso <strong>{{ student.course }}</strong></p>
+        </div>
+        <div class="col-2 border-left">
+            <p class="mt-3 mb-0 pb-0 text-center">MOD 05-08</p>
+            <p class="mt-1 pt-0 text-center">Rev 5 del 03/06/2020</p>
+        </div>
+    </div>
+    <h3 class="mt-5 text-center">L'anno ______________ addì ______________ del mese di ______________ </h3>
+    <br>
+    <p class="text-justify"><strong style="text-decoration: underline">Preso atto che</strong>  il Centro di Formazione
+        Professionale don Giulio Facibeni svolge corsi a vari livelli, fra i quali i corsi di qualifica di base per l’obbligo
+        formativo finanziati con il F.S.E. di cui al bando regionale obbligo formativo biennio 2019/2021;</p>
+    <br>
+    <p class="text-justify"><strong style="text-decoration: underline">Rilevato che</strong> dal bando suddetto si  prevede,
+        fra i vincoli delle modalità attuative dei progetti, lo svolgimento di alternanza scuola lavoro presso le aziende
+        nel settore ed, in particolare, che gli interventi di formazione professionale dovranno prevedere attività di
+        alternanza per almeno il 38% delle ore complessive del corso,</p>
+    <h4 class="text-center my-4"><strong>SI CONVIENE TRA</strong></h4>
+    <p class="border p-3 text-justify">Il <strong>CENTRO DI FORMAZIONE PROFESSIONALE DON GIULIO FACIBENI</strong>, con sede operativa
+        in Firenze via Don Giulio Facibeni 13, Codice Fiscale 068401101487, d’ora in poi denominato “SOGGETTO PROMOTORE”
+        rappresentata dal Sig. Giovanni Biondi in qualità di  Presidente, nato a Tavarnelle in Val di Pesa il 27/09/1951
+        e residente a Firenze in via di Scandicci n.11</p>
+    <h4 class="text-center my-4"><strong>E</strong></h4>
+    <div class="container-fluid p-3 border mb-5">
+    <p style="line-height: 35px; page-break-before: inherit" class="text-justify">La ditta denominata ____________________________________________________________________________________________
+        con sede legale in _________________________________________________________________________________________ -
+        Via/Piazza ________________________________________________________________________________________________________
+        - P. IVA ________________________________________________________, iscritta alla camera di commercio con numero
+        __________________________________________________,
+        avente sede operativa in ___________________________________________________________________________________
+        - Via/piazza ____________________________________________________________________________________________________________________
+        <br>Tel. ______________________________________________- E-mail ______________________________________________</p>
+    <p class="text-center">d'ora in poi denominata <strong>AZIENDA OSPITANTE</strong></p>
+    <p style="line-height: 35px;" class="text-justify">rappresentata da ______________________________________________ nato/a il ______________________________________
+        a ______________________________________________ e residente in ______________________________________________,
+        Via/Piazza _____________________________________________________________________, in qualità di ______________________________________________</p>
+    </div>
+    <div class="new-page"></div>
+    <h4 class="text-center my-4"><strong>QUANTO SEGUE</strong></h4>
+    <h5><strong>Art.1) Soggetti stagisti e Tutori</strong></h5>
+    <p class="text-justify">1. Ai sensi dell’Art. 18 della Legge 24 Giugno 1997 n° 196, L’Azienda Ospitante, su richiesta del Soggetto Promotore,
+        accetta di accogliere presso le proprie strutture l’allievo </p>
+    <div class="container-fluid p-3 border mb-2">
+    <p style="line-height: 30px; page-break-before: inherit" class="text-justify">Nome e cognome: <strong>{{ student.name|upper }} {{ student.surname|upper }}</strong>
+    <br>Nato il {{ student.date_of_birth }}. Residente in {{ student.resident_in_city }}, {{ student.resident_in_address }}
+        {{ student.postal_code }}.
+        <br>Codice Fiscale: {% if student.fiscal_code %}{{ student.fiscal_code }}{% else %}<span class="text-danger">CODICE MANCANTE!</span>{% endif %},
+        allievo della scuola secondaria superiore della formazione professionale {% if stage.course.official_name %}nel corso di {{ stage.course.official_name }},{% endif %}
+        presso il Centro di Formazione Professionale “Don Giulio Facibeni” con sede operativa in Firenze, Via Don Giulio Facibeni 13.
+        <br>Portatore di Handicap: {% if student.handicap %} sì {%  else %} no {% endif %}</p>
+    </div>
+    <p class="text-justify">
+        in qualità di Stagista per il periodo compreso tra il  {{ stage.start_date }} e il {{ stage.end_date }}; restando
+        comunque valido il calendario scolastico. {% if stage.holidays %} <strong>Si segnala che gli allievi saranno in vacanza {{ stage.holidays|upper }}.</strong> {% endif %}
+        Da ora in avanti l’allievo sopracitato sarà nominato  <strong>“STAGISTA”</strong>
+    </p>
+    <p class="text-justify" style="line-height: 30px">2. L’Azienda Ospitante nomina come Tutor Aziendale preposto all’inserimento ed alla sorveglianza
+        dello stagista nonchè ai rapporti con il Tutor e/o la Direzione del Soggetto Promotore il
+        Sig._____________________________________________ in quanto soggetto competente sia in materia per la formazione
+        professionale sia in materia di prevenzione e protezione nel rispetto di tutte le condizioni di sicurezza e di salute
+        previste dalla vigente Legislazione con riferimento agli adempimenti previsti dal DLGS 81/08 e successive modifiche,
+        oltre alla gestione delle emergenze</p>
+    <p class="text-justify">Durante lo svolgimento dell’alternanza scuola lavoro, il Soggetto Promotore si impegna a
+        verificare che l’attività di formazione ed orientamento siano svolte in conformità quanto previsto nel progetto
+        formativo e di orientamento. A tale proposito il periodo di alternanza scuola lavoro è monitorato da
+        {% if stage.tutor %}<strong>{{ stage.tutor|upper }}</strong>{% else %}________________________________{% endif %},
+        tutor designato in veste di responsabile didattico-organizzativo</p>
+    <h5 class="my-4"><strong>Art.2) Obblighi del Soggetto Promotore</strong></h5>
+    <p class="text-justify">1. Il Soggetto Promotore dichiara che lo Stagista, avendo compiuto l’età di anni 15 ed avendo
+        assolto l’obbligo scolastico o essendone prosciolto con il conseguimento della licenza di terza media o equivalente,
+        è stato riconosciuto idoneo all’attività lavorativa a seguito di visita medica effettuata in data
+        {% if stage.medical_examination_date %}<strong>{{ stage.medical_examination_date }}</strong>{% else %}________________________________{% endif %}
+        che verrà rinnovata nel mese di <strong>{{ stage.medical_examination_renoval_date|date:'F Y' }}</strong> dal medico competente;
+        <br><br>2. Il Soggetto Promotore qualora accerti, durante le visite mediche obbligatorie per l’idoneità al lavoro,
+        che lo Stagista risulti parzialmente, temporaneamente o permanentemente NON IDONEO al lavoro, SI IMPEGNA a comunicare
+        il giudizio del medico per iscritto all’Azienda Ospitante, allo Stagista e ai titolari della patria potestà genitoriale;
+        <br><br>3. Il Soggetto Promotore si fa carico di informare/formare gli allievi che partecipano all’attività di applicazione
+        pratica presso il Soggetto Ospitante in materia di norme relative a igiene, sicurezza e salute sui luoghi di lavoro
+        ai fini dell’applicazione del D.Lgs 81/2008, e all’accordo Stato – Regioni del 21/12/2001 e del 07/07/2016 D. Lgs 106
+        con relativo attestato consegnato in data <strong>{{ stage.safety_certificate_date|date:'d F Y' }}</strong>.
+        <br><br>4. Per lo Stagista, inserito presso l’azienda Ospitante in base alla presente Convenzione, viene predisposto,
+        a cura del Soggetto promotore, un registro di presenze nel quale, oltre al nome del Tutor Aziendale e del Tutor
+        del Soggetto Promotore, saranno annotati tutti gli elementi inerenti il progetto formativo e di orientamento;
+        <br><br>5. Al Soggetto Promotore è riservata la facoltà, previa consultazione con l’Azienda Ospitante, di interrompere
+        lo svolgimento del periodo di alternanza scuola lavoro, qualora si evidenziassero palesi incongruenze con gli
+        obiettivi dello stesso.</p><div class="new-page"></div>
+    <h5 class="my-4"><strong>Art.3) Obblighi dell’Azienda Ospitante</strong></h5>
+    <p class="text-justify">1. L’Azienda Ospitante, stante il carattere formativo dello stage, NON HA ALCUN OBBLIGO DI ASSUNZIONE;
+        <br><br>2. All’Azienda Ospitante è riservata la facoltà, previa la consultazione con il Tutor e con la Direzione
+        del Soggetto Promotore, di interrompere lo svolgimento dell’attività formativa e di orientamento qualora si
+        verificassero atti o comportamenti da parte dello Stagista lesivi per l’Azienda Ospitante;
+        <br><br>3. L’Azienda Ospitante si impegna a fare acquisire un arricchimento professionale allo stagista
+        coinvolgendolo in attività pratiche compatibili con le sue capacità, da effettuarsi nei settori operativi
+        dell’Azienda Ospitante e rispondenti al progetto di formazione ed orientamento;
+        <br><br>4. L’orario d’attività giornaliero dello Stagista seguirà il normale orario di lavoro dell’Azienda
+        con un massimo impiego pari ad 8 (otto) ore, mai antecedenti alle ore 07,00 e mai seguenti le ore 20.00.
+        In particolare L’ Azienda Ospitante dichiara che l’orario di impiego dello stagista è il seguente:
+        </p>
+    <table class="table table-bordered table-hover">
+        <thead class="text-center">
+            <tr>
+              <th rowspan="2" class="align-middle" scope="col">Giorno</th>
+              <th colspan="2" scope="col">Mattino</th>
+              <th colspan="2" scope="col">Pomeriggio</th>
+            </tr>
+            <tr>
+              <th scope="col">Dalle</th>
+              <th scope="col">Alle</th>
+              <th scope="col">Dalle</th>
+              <th scope="col">Alle</th>
+            </tr>
+        </thead>
+        <tbody class="text-center">
+            <tr>
+                <td>Lunedì</td><td></td><td></td><td></td><td></td>
+            </tr>
+            <tr>
+                <td>Martedì</td><td></td><td></td><td></td><td></td>
+            </tr>
+            <tr>
+                <td>Mercoledì</td><td></td><td></td><td></td><td></td>
+            </tr>
+            <tr>
+                <td>Giovedì</td><td></td><td></td><td></td><td></td>
+            </tr>
+            <tr>
+                <td>Venerdì</td><td></td><td></td><td></td><td></td>
+            </tr>
+        </tbody>
+    </table>
+    <p class="text-justify">L’orario sopra riportato è valido per tutte le settimane previste del periodo di
+        alternanza scuola lavoro fatta eccezione per i seguenti giorni in cui è previsto il rientro a Scuola:
+    </p>
+
+    <form method="post">
+        {% csrf_token %}
+        <div class="form-group">
+            <label for="exampleFormControlTextarea1"></label>
+            <textarea style="font-size: xx-large"
+                    class="form-control border-0 bg-white text-center"
+                      disabled name='text'
+                      id="exampleFormControlTextarea1"
+                      rows="4">{{ stage.re_entries }} </textarea>
+        </div>
+    </form>
+    <h4 class="text-center"><strong>Pertanto gli allievi nei suddetti giorni non saranno presenti in azienda.</strong></h4>
+    <p class="text-justify my-5 ">Durante la pausa pranzo lo Stagista, qualora rimanga sul posto di lavoro, risulta sotto la
+        responsabilità del Tutor Aziendale. Nel caso l’Azienda Ospitante sia dotata di mensa, quale servizio per i dipendenti,
+        tale servizio sarà reso disponibile anche allo Stagista. Si precisa che le festività previste dal calendario
+        scolastico saranno attuate anche nel periodo di alternanza scuola lavoro.
+        <br><br>5. L’Azienda Ospitante si impegna a comunicare e a concordare preventivamente con il Tutor e/o la Direzione
+        del Soggetto Promotore eventuali spostamenti fuori provincia dello Stagista;</p>
+        <div class="new-page"></div>
+        <p class="text-justify mb-5">6. Durante l’orario d’attività previsto dell’Azienda Ospitante, lo Stagista <strong>NON DEVE</strong> usufruire di mezzo
+        di trasporto proprio. Lo Stagista può essere trasferito con mezzo dell’Azienda Ospitante purchè guidato dal personale
+        autorizzato dall’Azienda Ospitante stessa o con un mezzo pubblico, accompagnato da personale dell’Azienda se minorenne;
+        <br><br>
+        7. Ai sensi dell’Art. 2 comma 1 lettera a) del Dlgs 81/08 gli stagisti devono essere equiparati ai lavoratori
+        delle aziende ove svolgono il periodo di alternanza scuola lavoro e, pertanto, essi operano sotto la responsabilità
+        e la vigilanza dell’Azienda Ospitante che è obbligata a garantire il totale rispetto delle vigenti disposizioni in
+        materia di sicurezza ed igiene del lavoro oltre alle idonee procedure di gestione delle emergenze.
+        La presenza dello Stagista nell’Azienda Ospitante viene CERTIFICATA GIORNALMENTE APPONENDO LE FIRME DI ENTRATA
+        E DI USCITA SULL’APPOSITO LIBRETTO CUSTODITO DAL TUTOR AZIENDALE.
+        <br><br>8. In particolare, l’Azienda Ospitante si impegna a effettuare secondo quanto previsto dalle normative
+        vigenti la valutazione dei rischi con eventuali integrazioni aggiuntive per la presenza di minori, ai sensi di
+        quanto previsto e per gli effetti del combinato disposta all’Art. 4 comma 2 del Dlgs 81/08 e dell’Art. 8 del Dlgs 345/99.
+        L’Azienda Ospitante si impegna, altresì, a fornire allo Stagista adeguata formazione ed informazione ai sensi
+        dell’Art. 21 del DIgs 81/08. Quindi, la valutazione dei rischi avrà particolare riguardo alle problematiche inerenti:
+    </p>
+    <ul class="ml-5">
+        <li>
+            Uso dispositivi di protezione individuale
+        </li>
+        <li>
+            Lo sviluppo incompleto, la mancanza di esperienza e di consapevolezza nei riguardi dei rischi lavorativi esistenti;
+        </li>
+        <li>
+            Attrezzature e sistemazione del luogo e del posto di lavoro;
+        </li>
+        <li>
+            Natura, grado e durata di esposizione ad agenti chimici, biologici e fisici;
+        </li>
+        <li>
+            Rischi vibrazioni, rumori, esplosioni, elettrici e strutturali;
+        </li>
+        <li>
+            Movimentazione manuale dei carichi
+        </li>
+        <li>
+            Pianificazione dei processi di lavoro e dello svolgimento del lavoro e della loro interazione sull’organizzazione
+            generale del lavoro;
+        </li>
+        <li>
+            Prevenzioni incendi;
+        </li>
+        <li>
+            Situazione della formazione e dell’informazione
+        </li>
+        <li>
+            Procedure per la gestione delle emergenze
+        </li>
+    </ul>
+    <p class="text-justify my-5 ">9. L’Azienda Ospitante si impegna a recapitare al Soggetto Promotore e alla
+        Famiglia/Responsabile dello Stagista, dichiarazione su carta intestata che attesti di aver provveduto a formare
+        ed informare lo stagista circa i rischi derivanti dalle mansioni svolte nel periodo di alternanza scuola lavoro
+        stesso, in base alle informazioni desunte dall’ art. 21 del DGLS 81/08 e come meglio esplicitate all’ art. 3, commi
+        8,10,11 e 12 del presente documento.
+        <br><br>10. L’Azienda Ospitante si impegna a fornire adeguata formazione allo Stagista conformemente all’art. 21 e 22
+        del Dlgs 81/08, co particore riferimento alle macchine utensili ed alle attrezzature impiegate nelle varie lavorazioni
+        eseguibili dall’Azienda ospitante e a fornire allo stagista i dispositivi di protezione individuali specificati ai sensi Dlgs 81/08
+        <br><br>11. In caso di esposizione media giornaliera da parte dello Stagista al rumore superiore 80 decibel LEP-d,
+        l’Azienda Ospitante, ovvero il datore di lavoro, fermo restando gli esiti della valutazione dei rischi specifici
+        del minore e l’obbligo di ridurre al minimo i rischi derivanti dall’esposizione al rumore mediante misure tecniche,
+        organizzative e procedurali concretamente attuabili, privilegiando gli interventi alla fonte, fornisce i mezzi individuali
+        di protezione dell’udito ed un’adeguata formazione all’uso degli stessi, nonché un’adeguata vigilanza al rispetto
+        del loro corretto utilizzo;
+        <br><br>12. L’ Azienda Ospitante si impegna a dichiarare, ai sensi della legge 977/67 e ai sensi del combinato disposto
+        dell’Art. 7 Dlgs 345/99 e dell’Art 1 comma 1 Dlgs 262/2000 di non adibire lo Stagista ai lavori descritti nell’allegati
+        1 della Legge 977/67 modificato all’Art. 15 Dgls 345/99.
+        <br><br>13. L’Azienda ospitante dovrà garantire idoneità delle attrezzature e dei mezzi in conformità a quanto
+        previsto dalla vigente normativa in termini di salute e sicurezza dei lavoratori sul luogo di lavoro;
+        <br><br>14. In merito alle misure adottate per il contenimento del contagio da Covid-19, l’Azienda Ospitante dichiara
+        di avere redatto un protocollo anti-contagio che si allega alla presente convenzione.
+    </p>
+    <div class="new-page"></div>
+    <h5 class="my-5"><strong>Art.4) Obblighi dello Stagista</strong></h5>
+    <p class="text-justify">Durante lo svolgimento dello stage formativo e di orientamento, lo Stagista è tenuto a: </p>
+    <ol type="A">
+        <li>
+            Svolgere le attività previste nel progetto formativo e di orientamento;
+        </li>
+        <li>
+            Rispettare le norme in materia di igiene, sicurezza e salute sui luoghi di lavoro incluse quelle previste
+            dal protocollo anti-contagio Covid-19 redatto dall’azienda ospitante;
+        </li>
+        <li>
+            Mantenere la necessaria riservatezza per quanto attiene ai dati, informazioni o conoscenze in merito a
+            processi produttivi e prodotti acquisiti durante lo svolgimento dello stage;
+        </li>
+        <li>
+            Rispettare l’orario di lavoro prestabilito dall’Azienda Ospitante;
+        </li>
+        <li>
+            Seguire le indicazioni dei Tutor Aziendali e a fare riferimento a loro per qualsiasi esigenza di tipo
+            organizzativa o altre evenienze;
+        </li>
+        <li>
+            Firmare regolarmente il predisposto libretto presenze.
+        </li>
+    </ol>
+    <h5 class="my-4"><strong>Art.5) Garanzie Assicurative e di Controllo</strong></h5>
+    <p class="text-justify">1. Il Soggetto Promotore assicura lo Stagista contro gli infortuni sul lavoro presso
+        l’<strong>INAIL</strong>, posizione assicurativa n° <strong>95770542895</strong> e
+        <strong>la Compagnia Assicurativa UNIPOL- SAI S.p.A. </strong>, operante nel settore
+        con polizza infortuni n° <strong>085.1020827.88</strong> e polizza di responsabilità civile n° <strong>0085.5117961.16</strong>.
+        In caso di infortunio durante lo svolgimento del periodo di alternanza scuola lavoro, il Soggetto Promotore si impegna
+        a segnalare l’evento, entro i tempi previsti dalla normativa vigente, agli Istituti Assicurativi facendo riferimento
+        al numero della Polizza sottoscritta dal Soggetto Promotore e a darne comunicazione allo stesso;
+        <br><br>2. L’Azienda Ospitante si impegna, in caso d’infortunio, a provvedere al primo soccorso, a compilare
+        l’apposito modulo fornito dal Soggetto Promotore e a darne comunicazione allo stesso;
+        <br><br>3. Il Soggetto Promotore si impegna a far pervenire alla Regione Toscana, alle strutture provinciali
+        del Ministero del Lavoro e della previdenza Sociale competente per il territorio in materia di ispezione,
+        nonché alle rappresentanze Sindacali Aziendali copia della presente Convenzione del progetto formativo e di orientamento.
+    </p>
+    <div class="new-page"></div>
+    <h3 class="text-center mt-5">PROGETTO FORMATIVO E DI ORIENTAMENTO</h3>
+    <div class="container border">
+        <div class="row border bg-light p-3 text-center align-content-center">
+            <h4 class="text-center">Obiettivi e modalità del periodo di alternanza scuola lavoro</h4>
+        </div>
+            <form method="post">
+                {% csrf_token %}
+                <div class="form-group">
+                    <label for="exampleFormControlTextarea1"></label>
+                    <textarea class="form-control border-0 bg-white text-justify"
+                              disabled name='text'
+                              id="exampleFormControlTextarea1"
+                              rows="15">{{ stage.course.sector.stage_objectives }} </textarea>
+                </div>
+            </form>
+    </div>
+    <div class="container border mt-4 mb-3">
+        <div class="row border-bottom bg-light p-3 text-center align-content-center">
+            <h4>Facilitazioni previste</h4>
+        </div>
+        <div class="row border-bottom">.</div>
+        <div class="row border-bottom">.</div>
+        <div class="row border-bottom">.</div>
+        <div class="row border-bottom">.</div>
+    </div>
+
+    <p class="my-5">Firma del Soggetto Promotore <img style="height: 120px" class="signature_overlapping" src="{% static "images/timbro_firma.png" %}"></p>
+    <p style="line-height: 50px" class="my-5">Firma del datore di lavoro o facenti funzione con deleghe alla sicurezza dell’Azienda Ospitante
+    <br>__________________________________________________</p>
+    <p class="my-5">Firma del titolare della patria potestà dello Stagista _________________________________________</p>
+    <p class="my-5">Firma dello Stagista ________________________________________________</p>
+    <p class="py-5">Firenze, lì ________________________</p>
+
+</div>
+{% endblock content %}

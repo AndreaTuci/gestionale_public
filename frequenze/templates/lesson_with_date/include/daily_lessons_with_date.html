@@ -1,0 +1,84 @@
+<div class="col-4 d-block d-sm-none border-right">
+            <div style="height: 50px" class="row">
+                <div class="col pt-3">
+                    &nbsp;
+                </div>
+            </div>
+            {% for hour in schedule.hours %}
+            <div style="height: 50px" class="row border-top">
+                <div class="col pt-3">
+                    {{ hour }}
+                </div>
+            </div>
+            {% endfor %}
+        </div>
+
+<div class="col-8 col-sm-2 border-right">
+    <div style="height: 50px" class="row">
+        <div class="col pt-3">
+            {{ selected_day }} {{ day_n }}
+        </div>
+    </div>
+    {% for hour, lesson in lessons %}
+        {% if lesson != '' %}
+            <div>
+            {% if lesson.training_unit.kind == 'U' %}
+                <div style="height: 50px" class="row bg-cyan border-top">
+            {% elif lesson.training_unit.kind == 'T' %}
+                <div style="height: 50px" class="row bg-orange text-white border-top">
+            {% elif lesson.training_unit.kind == 'L' %}
+                <div style="height: 50px" class="row bg-dark text-white border-top">
+            {% else %}
+                <div style="height: 50px" class="row border-top">
+            {% endif %}
+            {%  if 'frequenze.delete_lessonwithdate' in request.user.get_all_permissions %}
+        <div class="ml-1 mt-1"
+             hx-delete="{% url 'new-lesson-delete' lesson.pk ref_date%}"
+             hx-swap="outerHTML"
+             hx-target="#replaceMe">
+            <i style="cursor: pointer" class="fal fa-times-circle m-0 p-0"></i>
+        </div>
+                {% endif %}
+
+
+
+                        <div class="col">
+
+                            {% ifchanged %}
+                                <span style="font-size: smaller; ">
+                                    <strong>{{ lesson.training_unit.name|truncatewords:2 }}</strong>
+                                    <br/>
+                                    {{ lesson.classroom.name }}
+                                </span>
+                            {% else %}
+                                {% for agreement in lesson.trainingunit.related_unit.filter %}{{ agreement.employee }}{% endfor %}
+                                {% ifchanged %}
+                                    {% for agreement in lesson.training_unit.contract_related_unit.all %}
+                                        <span style="font-size: smaller">
+                                            {{ agreement.employee.surname|truncatewords:2 }}
+                                        </span>
+                                    {% endfor %}
+                                    <!--<p class="text-danger">{{ lesson.training_unit.related_unit.filter }}</p>-->
+                                {% else %}
+
+                                {% endifchanged %}
+                            {% endifchanged %}
+
+                        </div>
+{#                            <div class="mr-1 mt-1"#}
+{#                             hx-post="{% url 'teacherattendance-create' lesson.training_unit.related_unit.get.employee.id lesson.training_unit.pk day course %}"#}
+{#                             hx-swap="outerHTML"#}
+{#                             hx-target="#replaceMe">#}
+{#                            <i class="fal fa-square"></i>#}
+{#                        </div>#}
+                    </div>
+                    </div>
+                {% else %}
+                    <div style="height: 50px" class="row border-top">
+                        <div class="col pt-3" onclick="getElementById('form_day').value = '{{ selected_day }}';getElementById('form_hour').value = '{{ forloop.counter }}'">
+                        </div>
+                    </div>
+
+                {% endif %}
+            {% endfor %}
+        </div>

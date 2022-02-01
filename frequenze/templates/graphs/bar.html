@@ -1,0 +1,19 @@
+{% extends 'base.html' %}
+{% load highcharts_tags %}
+
+{% block content %}
+<!-- enable highcharts scripts -->
+   <!-- highcharts_js (highcharts 3d highstock heatmap) you need to pass 1 or 0 if you want to enable 3d or highstock         etc...-->
+   {% highcharts_js 1 0 0 0 %}
+   <!-- the graph container -->
+   <div id="container" style="height: 400px; min-width: 310px; max-width: 1200px; margin: 0 auto"></div>
+   <!-- the javascript call -->
+   <script>
+   $(function () {
+       $.getJSON("{% url 'pie_json' %}", function(data) {
+           $('#container').highcharts(data);
+       });
+   })</script>
+
+
+{% endblock content %}

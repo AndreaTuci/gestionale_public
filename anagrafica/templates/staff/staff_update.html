@@ -1,0 +1,23 @@
+{% extends 'base.html' %}
+{% load crispy_forms_tags %}
+{% block content %}
+{% if profile != "invalid_profile" %}
+    <h5 class="my-3"><strong>{{ profile }}</strong> - Modifica il profilo</h5>
+    <form id="form_update" method="POST" enctype="multipart/form-data" class="mb-5">
+        {% csrf_token %}
+        {{ form|crispy }}
+        <button type="submit" class="btn btn btn-outline-dark ml-auto mt-3">Salva</button>
+    </form>
+
+
+{% else %}
+    <div class="row mt-5">
+        <div class="col-1">
+        </div>
+        <div class="col">
+            <i class="fad fa-users-slash fa-3x text-danger"></i>
+            <h4 class="text-danger mt-2">Puoi modificare solo il tuo profilo!</h4>
+        </div>
+    </div>
+{% endif %}
+{% endblock content %}

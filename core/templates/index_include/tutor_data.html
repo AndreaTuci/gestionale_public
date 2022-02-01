@@ -1,0 +1,54 @@
+<div class="col-xl-3">
+                <h3 class="border-bottom border-top mt-4 p-3">OLTRE 5 RITARDI - [{{ user_data.tutor_data.delays_n }}]</h3>
+                <br>
+                {% for course, students in user_data.tutor_data.delays.items %}
+                    {% if forloop.counter|divisibleby:2 %}
+                        <div class="border mb-1 bg-light">
+                    {% else %}
+                        <div class="border mb-1">
+                    {% endif %}
+                    <div class="p-2"> <h5>{{ course }}</h5></div>
+                        <p class="px-2">
+                            {% for student in students %}
+                                {% if student.date_of_birth < age_control.date %}
+                                    <span class="text-danger">{{ student }} [{{ student.delays }}]</span>
+                                {% else %}
+                                    {{ student }} [{{ student.delays }}]
+                                {% endif %}
+                                     -
+                            {% endfor %}
+                        </p>
+                    </div>
+                {% endfor %}
+
+            </div>
+            <div class="col-xl-3">
+                <h3 class="border-bottom border-top mt-4 p-3">ASSENTI - {{ user_data.tutor_data.attendances_date|date:"d M" }} [{{ user_data.tutor_data.absences_n }}%]</h3>
+                <br>
+                {% for course, students in user_data.tutor_data.absences.items %}
+                    {% if forloop.counter|divisibleby:2 %}
+                        <div class="border mb-1 bg-light">
+                    {% else %}
+                        <div class="border mb-1">
+                    {% endif %}
+                    <div class="p-2"> <h5>{{ course }}</h5></div>
+                        <p class="px-2">{{ students }}</p>
+                    </div>
+                {% endfor %}
+
+            </div>
+                <div class="col-xl-3">
+                        <h3 class="border-bottom border-top mt-4 p-3">NOTE
+                            <a href="{% url 'note-create' %}"><i style="font-size: large" class="fas fa-plus mr-2"></i></a>
+                            <a href="{% url 'note-list' %}"><i style="font-size: large" class="fal fa-folder-open mr-2"></i></a>
+                        </h3>
+                    <br>
+                    {% for note in user_data.tutor_data.notes %}
+                        <p class="px-3 my-0"><a href="{% url 'note-detail' note.pk %}"><strong>{{ note.student.surname|upper }}</strong></a>
+                            {% if note.priority %}
+                                <sup><i class="fas fa-circle text-danger"></i></sup>
+                            {% endif %}
+                             [{{ note.created_at }}]</p>
+                        <p class="px-3 border-bottom pb-2">{{ note.note_text }}</p>
+                    {% endfor %}
+                </div>

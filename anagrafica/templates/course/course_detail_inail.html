@@ -1,0 +1,194 @@
+{% extends 'base.html' %}
+{% load static %}
+{% block content %}
+<div class="d-none d-print-block">
+    <img class="ml-5" style="width: 90%" src="{% static "images/header_carta_intestata.png" %}" alt="CFP Don Facibeni">
+</div>
+
+<div class="container-fluid">
+    <div class="my-5 text-center">
+        <h2 class="text-center">
+            <span class="d-print-none">
+                <a href="{% url 'course-detail' course.pk %}"><i class="fal fa-chevron-circle-left"></i></a>
+            </span>
+            Registro di classe -
+            <span class="text-orange"><strong>Corso {{ course }}</strong></span>
+        </h2>
+    </div>
+    <p class="text-center">__________________________________________________________________________________</p>
+    <ul id="table_menu" style="width: 300px; position: absolute" class="form-check border bg-white d-none d-print-none">
+
+    </ul>
+    <div class="row justify-content-center">
+        <div class="table-responsive">
+        <table class="table table-bordered table-hover" id="table_students">
+            <thead class="text-center">
+                <tr>
+                    <th scope="col">Numero</th>
+                    <th scope="col">Cognome</th>
+                    <th scope="col">Nome</th>
+                    <th scope="col">Data di nascita</th>
+                    <th scope="col">Luogo di nascita</th>
+                    <th scope="col">Indirizzo</th>
+                    <th scope="col">Tel.</th>
+                    <th scope="col">E-mail</th>
+                    <th scope="col">Rif. 1</th>
+                    <th scope="col">Rif. 2</th>
+                    <th scope="col">Codice Fiscale</th>
+                    <th style="width: 300px" scope="col">Firma</th>
+            </thead>
+            <tbody class="text-center">
+            {% for student in students %}
+                <tr>
+                    <td>{{ student.number }}</td>
+                    <td>{{ student.surname }}</td>
+                    <td>{{ student.name }}</td>
+                    <td>{{ student.date_of_birth }}</td>
+                    <td>{{ student.place_of_birth }}</td>
+                    <td>{{ student.resident_in_address }} ({{ student.resident_in_city }})</td>
+                    <td>{% if student.telephone %}
+                            {{ student.telephone }}
+                        {% endif %}
+                    </td>
+                    <td>
+                        {% if student.email %}
+                            {{ student.email }}
+                        {% endif %}
+                    </td>
+                    <td>{% if student.parent_telephone_1 or student.parent_email_1 %}
+                            {% if student.parent_role_1 %}
+                                {{ student.parent_role_1 }}:
+                            {% else %}
+                                Madre:
+                            {% endif %}
+                            {{ student.parent_telephone_1 }} {{ student.parent_email_1 }}
+                        {% endif %}
+                    </td>
+                    <td>
+                        {% if student.parent_telephone_2 or student.parent_email_2 %}
+                            {% if student.parent_role_2 %}
+                                {{ student.parent_role_2 }}:
+                            {% else %}
+                                Padre:
+                            {% endif %}
+                            {{ student.parent_telephone_2 }} {{ student.parent_email_2 }}
+                        {% endif %}
+                    </td>
+                    <td>{{ student.fiscal_code }}</td>
+                    <td></td>
+                </tr>
+            {% endfor %}
+            </tbody>
+        </table>
+
+        </div>
+    </div>
+</div>
+<script>
+document.addEventListener('DOMContentLoaded', function() {
+    const menu = document.getElementById('table_menu');
+    const table = document.getElementById('table_students');
+    const headers = [].slice.call(table.querySelectorAll('th'));
+    const cells = [].slice.call(table.querySelectorAll('th, td'));
+    const numColumns = headers.length;
+
+    const thead = table.querySelector('thead');
+    thead.addEventListener('contextmenu', function(e) {
+        e.preventDefault();
+        const rect = thead.getBoundingClientRect();
+        const x = e.clientX;
+        const y = e.clientY;
+
+        menu.style.top = `${y}px`;
+        menu.style.left = `${x}px`;
+        menu.classList.toggle('d-none');
+
+        document.addEventListener('click', documentClickHandler);
+    });
+
+    // Hide the menu when clicking outside of it
+    const documentClickHandler = function(e) {
+        const isClickedOutside = !menu.contains(e.target);
+        if (isClickedOutside) {
+            menu.classList.add('d-none');
+            document.removeEventListener('click', documentClickHandler);
+        }
+    };
+
+    const showColumn = function(index) {
+        cells
+            .filter(function(cell) {
+                return cell.getAttribute('data-column-index') === `${index}`;
+            })
+            .forEach(function(cell) {
+                cell.style.display = '';
+                cell.setAttribute('data-shown', 'true');
+            });
+
+        menu.querySelectorAll(`[type="checkbox"][disabled]`).forEach(function(checkbox) {
+            checkbox.removeAttribute('disabled');
+        });
+    };
+
+    const hideColumn = function(index) {
+        cells
+            .filter(function(cell) {
+                return cell.getAttribute('data-column-index') === `${index}`;
+            })
+            .forEach(function(cell) {
+                cell.style.display = 'none';
+                cell.setAttribute('data-shown', 'false');
+            });
+        // How many columns are hidden
+        const numHiddenCols = headers
+            .filter(function(th) {
+                return th.getAttribute('data-shown') === 'false';
+            })
+            .length;
+        if (numHiddenCols === numColumns - 1) {
+            // There's only one column which isn't hidden yet
+            // We don't allow user to hide it
+            const shownColumnIndex = thead.querySelector('[data-shown="true"]').getAttribute('data-column-index');
+
+            const checkbox = menu.querySelector(`[type="checkbox"][data-column-index="${shownColumnIndex}"]`);
+            checkbox.setAttribute('disabled', 'true');
+        }
+    };
+
+    cells.forEach(function(cell, index) {
+        cell.setAttribute('data-column-index', index % numColumns);
+        cell.setAttribute('data-shown', 'true');
+    });
+
+    headers.forEach(function(th, index) {
+        // Build the menu item
+        const li = document.createElement('li');
+        const label = document.createElement('label');
+        const checkbox = document.createElement('input');
+        li.setAttribute('class', 'list-group-item border-0');
+        checkbox.setAttribute('type', 'checkbox');
+        checkbox.setAttribute('class', 'form-check-input');
+        checkbox.setAttribute('checked', 'true');
+        checkbox.setAttribute('data-column-index', index);
+
+        const text = document.createTextNode(th.textContent);
+
+        label.appendChild(checkbox);
+        label.appendChild(text);
+        label.setAttribute('class', 'form-check-label');
+
+        li.appendChild(label);
+        menu.appendChild(li);
+
+        // Handle the event
+        checkbox.addEventListener('change', function(e) {
+            e.target.checked ? showColumn(index) : hideColumn(index);
+            menu.classList.add('hidden');
+        });
+    });
+});
+</script>
+{% endblock content %}
+
+
+

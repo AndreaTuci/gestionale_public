@@ -1,0 +1,95 @@
+{% extends 'base.html' %}
+
+{% block content %}
+    <div class="container-fluid my-3 border rounded-0">
+    <div class="p-3">
+        <h3>Ricerca lezioni validate</h3>
+        <form method="POST" enctype="multipart/form-data">
+            {% csrf_token %}
+            <div class="form-row">
+                <div class="form-group col-4">
+                    <label for="startDate">Inizio intervallo</label>
+                    <input type="date" class="form-control rounded-0" id="startDate" name="startDate">
+                </div>
+                <div class="form-group col-4">
+                    <label for="endDate">Fine intervallo</label>
+                    <input type="date" class="form-control rounded-0" id="endDate" name="endDate">
+                </div>
+                <div class="form-group col-4">
+                    <label for="course">Corso</label>
+                    <select class="form-control rounded-0" id="course" name="course">
+                        <option></option>
+                        {% for course in courses %}
+                            <option value="{{ course.pk }}">{{ course }}</option>
+                        {% endfor %}
+                    </select>
+                </div>
+            </div>
+            <div class="form-row">
+                <div class="form-group col-6">
+                    <label for="teacher">Insegnante</label>
+                    <select class="form-control rounded-0" id="teacher" name="teacher">
+                        <option></option>
+                        {% for teacher in teachers %}
+                            <option value="{{ teacher.pk }}">{{ teacher }}</option>
+                        {% endfor %}
+                    </select>
+                </div>
+                <div class="form-group col-6">
+                    <label for="uf">Unità Formativa</label>
+                    <select class="form-control rounded-0" id="uf" name="uf">
+                        <option></option>
+                        {% for training_unit in training_units %}
+                            <option value="{{ training_unit.pk }}">{{ training_unit }}</option>
+                        {% endfor %}
+                    </select>
+                </div>
+            </div>
+            <div class="d-flex d-flex justify-content-end">
+                <button type="submit" class="btn btn btn-outline-dark mt-3 px-4 rounded-0">
+                    <i class="fal fa-2x fa-search mr-2 pt-2"></i>
+                    <span style="position: relative; bottom: 8px; font-size: larger" >
+                        Ricerca
+                    </span>
+                </button>
+            </div>
+        </form>
+    </div>
+    </div>
+    <div id="replaceMe">
+        <table class="table table-bordered table-hover">
+            <thead class="text-center">
+            <tr>
+                <th scope="col">Data</th>
+                <th scope="col">Orario</th>
+                <th scope="col">Uf</th>
+                <th scope="col">Docente</th>
+            </tr>
+            </thead>
+            <tbody class="text-center">
+            {% for lesson in lessons %}
+                {% ifchanged %}
+                    <tr class="bg-light">
+                        <td colspan="4" style="position: relative; left: 20px; font-size: large" class="text-left">
+                            <strong>{{ lesson.training_unit.course|upper }}</strong>
+                        </td>
+                    </tr>
+                {% endifchanged %}
+                <tr>
+                    <td >{{ lesson.lesson_date|date:'l' }} {{ lesson.lesson_date }}</td>
+                    <td>{{ lesson.get_hour_display }}</td>
+                    <td>UF{{ lesson.training_unit.code }} - {{ lesson.training_unit.name }}</td>
+                    <td>{{ lesson.training_unit.contract_related_unit.get.employee.name}}
+                    {{ lesson.training_unit.contract_related_unit.get.employee.surname}}</td>
+                </tr>
+        {% endfor %}
+            </tbody>
+        </table>
+    </div>
+
+
+
+{% endblock content %}
+
+
+

@@ -1,0 +1,17 @@
+
+
+    <div class="mt-3"><h2>Scansiona un codice</h2></div>
+    <div class="p-2">
+        <form method="POST" enctype="multipart/form-data">
+            {% csrf_token %}
+            <input tabindex="0" type="text" class="form-control" aria-label="Default" id="code" name="code">
+        </form>
+    </div>
+    {% if message %}
+    <p>{{ message }}</p>
+    {% endif %}
+    <script>
+        window.onload = function() {
+            document.getElementById("code").focus();
+        };
+    </script>

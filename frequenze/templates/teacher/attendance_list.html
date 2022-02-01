@@ -1,0 +1,38 @@
+{% extends 'base.html' %}
+
+{% block content %}
+
+    {% if request.user.is_staff %}
+
+    {% endif %}
+
+    <div class="d-flex">
+        <div class="mr-auto p-2"><h2>Lista</h2></div>
+        <div class="p-2"><form action="{% url 'staff-create' %}"> <button type="submit" class="btn btn-outline-dark"><i class="fas fa-plus"></i> Aggiungi</button></form></div>
+    </div>
+
+    <table class="table table-bordered table-hover">
+        <thead class="text-center">
+            <tr>
+              <th scope="col">UF</th>
+              <th scope="col">Docente</th>
+              <th scope="col">Data</th>
+            </tr>
+        </thead>
+        <tbody class="text-center">
+        {% for attendance in list %}
+            <tr>
+              <th scope="row">{{ attendance.training_unit }}</th>
+              <td><a href="">{{ attendance.teacher.surname }} {{ attendance.teacher.name }}</a></td>
+              <td>{{ attendance.attendance_date }}</td>
+            </tr>
+    {% endfor %}
+        </tbody>
+    </table>
+
+
+
+{% endblock content %}
+
+
+

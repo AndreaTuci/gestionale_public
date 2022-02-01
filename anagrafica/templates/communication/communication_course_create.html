@@ -1,0 +1,40 @@
+{% extends 'base.html' %}
+{% load crispy_forms_tags %}
+
+{% block content %}
+
+<h5 class="my-3">Scrivi una nuova comunicazione per {{ course }}</h5>
+    {%  if form.errors %}
+        <div class="alert alert-danger">
+            Correggi gli errori evidenziati!
+        </div>
+    {% endif %}
+<form id="formSendCommunication" method="POST" enctype="multipart/form-data" class="mb-5">
+    {% csrf_token %}
+    {{ form|crispy }}
+    <div class="d-flex">
+        <input class="btn btn-outline-dark rounded-0" type="button" value="INVIA COMUNICAZIONE" data-toggle="modal" data-target="#saveConfirmModal">
+    </div>
+</form>
+<div class="modal fade" id="saveConfirmModal" tabindex="-1" role="dialog" aria-labelledby="saveConfirmModalLabel" aria-hidden="true">
+      <div class="modal-dialog" role="document">
+        <div class="modal-content">
+          <div class="modal-header">
+            <h5 class="modal-title" id="saveConfirmModalLabel">Conferma di invio</h5>
+            <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+              <span aria-hidden="true">&times;</span>
+            </button>
+          </div>
+          <div class="modal-body" id="modalBody">
+              <p>Vuoi inviare la comunicazione?</p>
+
+          </div>
+          <div class="modal-footer">
+            <button type="button" class="btn btn-outline-info mt-3" data-dismiss="modal">Ancora no</button>
+            <button type="submit" class="btn btn btn-outline-dark ml-auto mt-3" form="formSendCommunication">Invia</button>
+          </div>
+        </div>
+      </div>
+    </div>
+
+{% endblock content %}

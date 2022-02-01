@@ -1,0 +1,123 @@
+<div class="row mt-3">
+    {% for course in course_list %}
+        <div class="col-6 col-sm-2 mx-0 my-1">
+        <button class='btn btn-outline-dark btn-block rounded-0 d-print-none'
+                hx-get="{% url 'new-lesson-schedule' course.pk ref_date %}"
+                hx-target="#replaceMe"
+                hx-swap="outerHTML">
+             {{ course }}
+        </button>
+        </div>
+    {% endfor %}
+</div>
+
+<div id="replaceMe" class="container-fluid">
+
+    {% if course > 0 %}
+        {%  if 'frequenze.add_lessonwithdate' in request.user.get_all_permissions %}
+        <div class="d-print-none">{% include 'lesson_with_date/lesson_with_date_add.html' %}
+            {% if messages %}
+                <div class="alert alert-danger">
+                    <h4>Non è possibile inserire la lezione:</h4>
+                    {% for message in messages %}
+                        <p{% if message.tags %} class="{{ message.tags }}"{% endif %}>{{ message }}</p>
+                    {% endfor %}
+                </div></div>
+{% endif %}{% endif %}
+            <div class="row">
+                <div class="col-sm-4 mt-2"><div class="text-center"><h3>ORARIO DEL CORSO {{ course_name }}</h3></div></div>
+
+                   <div class="col-sm-4 mt-1 px-1">
+                    <button class='btn btn-outline-dark btn-block rounded-0 d-print-none'
+                            hx-get="{% url 'new-lesson-schedule' course week_backward %}"
+                            hx-target="#replaceMe"
+                            hx-swap="outerHTML">
+                        <i class="fal fa-step-backward mr-2"></i>Settimana precedente
+                    </button>
+                   </div>
+                 <div class="col-sm-4 mt-1 px-1">
+                    <button class='btn btn-outline-dark rounded-0 btn-block d-print-none'
+                            hx-get="{% url 'new-lesson-schedule' course week_forward %}"
+                            hx-target="#replaceMe"
+                            hx-swap="outerHTML">
+                        Settimana seguente<i class="fal fa-step-forward ml-2"></i>
+                    </button>
+                 </div>
+            </div>
+
+    <div class="row text-center mt-3">
+        <div class="col-2 d-none d-sm-block border-right">
+            <div style="height: 50px" class="row">
+                <div class="col pt-3">
+                    &nbsp;
+                </div>
+            </div>
+            {% for hour in schedule.hours %}
+            <div style="height: 50px" class="row border-top">
+                <div class="col pt-3">
+                    {{ hour }}
+                </div>
+            </div>
+            {% endfor %}
+        </div>
+
+        <!-- Modal -->
+{#onclick="window.location.href='{% url 'send-schedule' course %}'"type="submit"#}
+
+    <div class="modal fade" id="sendConfirmModal" tabindex="-1" role="dialog" aria-labelledby="saveConfirmModalLabel" aria-hidden="true">
+      <div class="modal-dialog" role="document">
+        <div class="modal-content">
+          <div class="modal-header">
+            <h5 class="modal-title" id="saveConfirmModalLabel">Conferma di invio</h5>
+            <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+              <span aria-hidden="true">&times;</span>
+            </button>
+          </div>
+          <div class="modal-body" id="modalBody">
+              <p>Una volta inviato l'orario sarà visibile agli studenti!</p>
+              <p><strong>Confermi?</strong></p>
+
+          </div>
+          <div class="modal-footer">
+              <button type="button"
+                      class="btn btn-outline-danger mt-3 rounded-0"
+                      data-dismiss="modal">
+                  No
+              </button>
+              <button type="submit"
+                      class="btn btn btn-outline-info ml-auto mt-3 rounded-0"
+                      onclick="window.location.href='{% url 'send-schedule' course %}'">
+                  Invia
+              </button>
+          </div>
+        </div>
+      </div>
+    </div>
+
+        {% endif %}
+        {% for day in schedule.days %}
+            {% if day == 'Lun' %}
+                {% include 'lesson_with_date/include/daily_lessons_with_date.html' with selected_day=day day_n=day_numbers.Lun lessons=schedule.Lun.items%}
+            {% elif day == 'Mar' %}
+                {% include 'lesson_with_date/include/daily_lessons_with_date.html' with selected_day=day day_n=day_numbers.Mar lessons=schedule.Mar.items%}
+            {% elif day == 'Mer' %}
+                {% include 'lesson_with_date/include/daily_lessons_with_date.html' with selected_day=day day_n=day_numbers.Mer lessons=schedule.Mer.items%}
+            {% elif day == 'Gio' %}
+                {% include 'lesson_with_date/include/daily_lessons_with_date.html' with selected_day=day day_n=day_numbers.Gio lessons=schedule.Gio.items%}
+            {% elif day == 'Ven' %}
+                {% include 'lesson_with_date/include/daily_lessons_with_date.html' with selected_day=day day_n=day_numbers.Ven lessons=schedule.Ven.items%}
+            {% endif %}
+        {% endfor %}
+
+
+    </div>
+</div>
+
+
+
+<!--<script>
+    var lastname = sessionStorage.getItem('schedule_form_error');
+    console.log(lastname)
+    document.addEventListener('click',sessionStorage.removeItem("schedule_form_error"))
+
+</script>-->

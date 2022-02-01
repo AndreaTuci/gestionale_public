@@ -1,0 +1,39 @@
+{% extends 'base.html' %}
+{% load crispy_forms_tags %}
+
+
+{% block content %}
+    {% if error %}
+    {{ error }}
+    {% endif %}
+    <div class="border p-3 bg-light my-3">
+    <h4 class="my-3 text-info"><strong>Registrazione di un nuovo utente</strong></h4>
+    <p>Compila il form qui sotto e premi sul pulsante Salva</p>
+    </div>
+<form method="POST" enctype="multipart/form-data" class="mb-5">
+    {% csrf_token %}
+    {{ form|crispy }}
+    <button type="submit" class="btn btn btn-outline-dark ml-auto mt-3">Salva</button>
+</form>
+<!--
+<script>
+document.addEventListener('DOMContentLoaded', hide)
+document.getElementById('taskID').addEventListener('change', toggleSpecialization)
+document.getElementById('taskID').addEventListener('', toggleSpecialization)
+function hide(){
+    var x = document.getElementById("specializationID")
+    x.style.display = 'none';
+}
+
+function toggleSpecialization() {
+  var x = document.getElementById("specializationID")
+  var y = document.getElementById("taskID")
+  if (y.options[y.selectedIndex].text === "Docente") {
+    x.style.display = "block";
+  } else {
+    x.style.display = "none";
+  }
+}
+
+</script>-->
+{% endblock content %}

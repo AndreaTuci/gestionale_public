@@ -1,0 +1,23 @@
+{% extends 'base.html' %}
+{% load crispy_forms_tags %}
+
+{% block content %}
+
+<h5 class="my-3">Nuovo movimento per {{ barcode }}</h5>
+<form method="POST" enctype="multipart/form-data" class="mb-5">
+    {% csrf_token %}
+    {% if error %}
+    <div class="alert-danger my-1 p-2">
+        La quantità che rimane in magazzino non può essere un numero negativo!
+    </div>
+    {% endif %}
+    {{ movement_form.non_field_errors }}
+    {% for hidden_field in movement_form.hidden_fields %}
+        {{ hidden_field.errors }}
+        {{ hidden_field }}
+    {% endfor %}
+    {{ movement_form|crispy }}
+    <button type="submit" class="btn btn btn-outline-dark ml-auto mt-3 rounded-0">Salva</button>
+</form>
+
+{% endblock content %}

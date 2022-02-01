@@ -1,0 +1,32 @@
+<form method="POST"
+      enctype="multipart/form-data"
+      class="form p-3 m-2"
+      hx-post={% url 'warehouse-movement-create' barcode %}
+>
+    <h4 class="pt-3 mt-2"><strong>Cod. [{{ barcode }}]</strong></h4>
+    <h5 class="mb-2">AGGIUNGI UN NUOVO PRODOTTO</h5>
+    {% csrf_token %}
+    {{ form.non_field_errors }}
+    {% for hidden_field in form.hidden_fields %}
+        {{ hidden_field.errors }}
+        {{ hidden_field }}
+    {% endfor %}
+    <table class="table">
+        <tbody>
+            {% for field in product_form.visible_fields %}
+              <tr>
+                <th>{{ field.label_tag }}</th>
+                <td>
+                    {{ field.errors }}
+                    {{ field }}
+                    {{ field.help_text }}
+                </td>
+              </tr>
+            {% endfor %}
+        </tbody>
+    </table>
+    <h4>Dati del movimento</h4>
+    <p>{{ movement_form }}</p>
+    <button type="submit" class="btn btn btn-outline-dark ml-auto mt-3 rounded-0">Salva</button>
+
+</form>

@@ -1,0 +1,39 @@
+{% extends 'base.html' %}
+
+{% block content %}
+
+    {% if request.user.is_staff %}
+
+    {% endif %}
+
+    <div class="d-flex">
+        <div class="mr-auto p-2"><h2>Lista</h2></div>
+        <div class="p-2"><form action=""> <button type="submit" class="btn btn-outline-dark"><i class="fas fa-plus"></i> Aggiungi</button></form></div>
+    </div>
+    <div class="table-responsive">
+        <table class="table table-bordered table-hover">
+            <thead class="text-center">
+                <tr>
+                  <th scope="col"></th>
+                  <th scope="col"></th>
+                  <th scope="col"></th>
+                </tr>
+            </thead>
+            <tbody class="text-center">
+                {% for x in list %}
+                    <tr>
+                      <th scope="row"></th>
+                      <td><a href=""></a></td>
+                      <td></td>
+                    </tr>
+                {% endfor %}
+            </tbody>
+        </table>
+    </div>
+
+
+
+{% endblock content %}
+
+
+

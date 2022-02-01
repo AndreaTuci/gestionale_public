@@ -1,0 +1,20 @@
+<div class="container-fluid my-3 p-3 border rounded-0">
+    <div class="d-flex" id="product">
+        <h4 class="mr-auto">
+            {{ product.name }} <span style="font-size: smaller">[{{ product.barcode }}]</span>
+        </h4>
+        <form action="{% url 'warehouse-movement-add' product.barcode %}">
+            <button type="submit" class="btn btn-outline-dark rounded-0 mx-2">
+                <i class="fal fa-exchange-alt"></i> Nuovo movimento
+            </button>
+        </form>
+
+    </div>
+    <p>{{ product.brand|upper }}</p>
+    <p>{{ product.description }}</p>
+    <p>Reparto {{ product.get_department_display }}</p>
+    <p>Costo unitario: {{ product.price }} €</p>
+    <p>Quantità in magazzino: {{ product.quantity }}</p>
+</div>
+
+{% include 'warehouse/include/movements_table.html' %}

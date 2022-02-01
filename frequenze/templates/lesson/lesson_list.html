@@ -1,0 +1,23 @@
+{% extends 'base.html' %}
+
+{% block content %}
+<div class="container-fluid mx-0 px-0">
+    <button type="submit"
+            class="btn btn btn-outline-info ml-auto mt-3 rounded-0"
+            onclick="window.location.href='{% url 'general-schedule' %}'">
+        <i class="fal fa-print mr-2"></i> Stampa l'orario settimanale
+    </button>
+    <button type="submit"
+            class="btn btn btn-outline-success ml-auto mt-3 rounded-0"
+            onclick="window.location.href='{% url 'send-schedule-all' %}'">
+        <i class="fal fa-paper-plane mr-3"></i>Invia a tutti l'orario aggiornato
+    </button>
+    {% if message %}
+        <div class="alert alert-success rounded-0 mt-3 pt-3" role="alert">
+            <h5><i class="fal fa-check mr-3"></i>{{ message }}</h5>
+        </div>
+    {% endif %}
+</div>
+{% include 'lesson/lesson_schedule.html'%}
+
+{% endblock content %}

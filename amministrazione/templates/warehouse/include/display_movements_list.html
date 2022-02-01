@@ -1,0 +1,18 @@
+<tbody class="text-center">
+    {% for movement in movements %}
+        <tr>
+            <!--<td>
+                <a href='#'
+                   class="mx-2 text-danger"
+                   hx-delete="">
+                    <i class="fal fa-trash-alt"></i></a>
+            </td>
+            <td>
+                <a href=""><i class="fal fa-file-user"></i></a>
+            </td>-->
+            <td>{{ movement.get_movement_type_display }}</td>
+            <td>{{ movement.quantity}}</td>
+            <td>{{ movement.movement_date }}</td>
+        </tr>
+    {% endfor %}
+</tbody>

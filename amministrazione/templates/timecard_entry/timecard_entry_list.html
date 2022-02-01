@@ -1,0 +1,42 @@
+{% extends 'base.html' %}
+
+{% block content %}
+
+        <form method="POST" enctype="multipart/form-data" class="mt-1 ml-2 mb-5">
+            {% csrf_token %}
+            <div class="form-group form-inline">
+                <label class="h5" for="search_pk">Cerca nello staff: </label>
+                <select class="form-select mx-2" name="search_pk" id="search_pk">
+                    {% for instance in staff %}
+                        <option value="{{ instance.pk }}">{{ instance }}</option>
+                    {% endfor %}
+                </select>
+                <button type="submit" class="btn btn btn-outline-dark rounded-0 ml-3">Salva</button>
+            </div>
+        </form>
+    <div class="mr-auto p-2"><h2>Entrate nella time card di {{ employee }}</h2></div>
+    <table class="table table-bordered table-hover">
+        <thead class="text-center">
+            <tr>
+              <th scope="col">Giorno</th>
+              <th scope="col">Tipo</th>
+              <th scope="col">Orario</th>
+            </tr>
+        </thead>
+        <tbody class="text-center">
+        {% for entry in entries %}
+            <tr>
+                <th scope="row">{{ entry.entry_date }}</th>
+                <td><a href="{% url 'timecard-update' entry.pk %}">{{ entry.get_in_out_display }}</a></td>
+                <td>{{ entry.entry_time }}</td>
+            </tr>
+    {% endfor %}
+        </tbody>
+    </table>
+
+
+
+{% endblock content %}
+
+
+

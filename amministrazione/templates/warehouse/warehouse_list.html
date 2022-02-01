@@ -1,0 +1,65 @@
+{% extends 'base.html' %}
+
+{% block content %}
+    <div class="mt-3"><h2>Scansiona un codice <i class="fal fa-scanner"></i></h2></div>
+    <div class="p-2">
+        <form onsubmit="false">
+            <input tabindex="0"
+                   type="text"
+                   class="form-control"
+                   aria-label="Default"
+                   id="code"
+                   name="code"
+                   hx-post="{% url 'warehouse-code' %}"
+                   hx-trigger="keyup changed delay:500ms"
+                   hx-target="#result"
+                   hx-indicator=".htmx-indicator"
+            >
+        </form>
+    </div>
+    {% if message %}
+    <p>{{ message }}</p>
+    {% endif %}
+    <script>
+        window.onload = function() {
+            document.getElementById("code").focus();
+        };
+
+        document.getElementById("code").onkeypress = function(e) {
+            if (e.key === 'Enter') {
+                e.preventDefault();
+            }
+        }
+
+
+    </script>
+
+    <div id = "result">
+    <div class="table-responsive">
+        <table class="table table-bordered table-hover">
+            <thead class="text-center">
+                <tr>
+                    <!--<th scope="col">Elimina</th>
+                    <th scope="col">Dettagli</th>-->
+                    <th scope="col">Codice</th>
+                    <th scope="col">Nome</th>
+                    <th scope="col">Marca</th>
+                    <th scope="col">Quantità</th>
+                    <th scope="col">Costo unitario</th>
+                    <th scope="col">Ultimo movimento</th>
+                </tr>
+            </thead>
+                {% include 'warehouse/include/display_warehouse_list.html' %}
+        </table>
+    </div>
+    </div>
+
+
+
+
+
+
+{% endblock content %}
+
+
+

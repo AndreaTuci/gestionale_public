@@ -1,0 +1,20 @@
+<div class="modal fade" onclose="focusMethod()" id="remindersModal" tabindex="-1" role="dialog" aria-labelledby="remindersModalLabel" aria-hidden="true">
+            <div class="modal-dialog" role="document">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <h5 class="modal-title" id="remindersModalLabel"><i class="fal fa-alarm-exclamation"></i> Promemoria e appuntamenti</h5>
+                        <button type="button" class="close" onclick="focusMethod()" data-dismiss="modal" aria-label="Close">
+                            <span aria-hidden="true">&times;</span>
+                        </button>
+                    </div>
+                    <div class="modal-body">
+                        {% for reminder in user_data.tutor_data.reminders %}
+                            <p><a href="{% url 'note-detail' reminder.pk %}">{{ reminder.student }}</a>: {{ reminder.note_text|truncatechars:30 }}</p>
+                        {% endfor %}
+                    </div>
+                    <div class="modal-footer">
+                        <button type="button" class="btn btn-outline-secondary rounded-0" onclick="focusMethod()" data-dismiss="modal">Chiudi</button>
+                    </div>
+                </div>
+            </div>
+        </div>

@@ -1,0 +1,137 @@
+<!DOCTYPE html>
+{% extends 'base.html' %}
+{% block content %}
+    {% load cloudinary %}
+    {% load static %}
+
+{% if profile == "invalid_profile" %}
+    <div class="row mt-5">
+        <div class="col-1">
+        </div>
+        <div class="col">
+            <i class="fad fa-users-slash fa-3x text-danger"></i>
+            <h4 class="text-danger mt-2">Puoi visualizzare solo il tuo profilo!</h4>
+        </div>
+    </div>
+    {% else %}
+        <div class="mt-4 ml-3">
+            <div class="row">
+                <div style="font-weight: bold" class="col-2 text-right">
+
+                </div>
+                <div class="col">
+                    <img class="crop" style="border-radius: 50%; height: 270px; width: 270px" src="{{ profile.avatar.url }}" alt="Profile image" onerror="this.src='{% static 'images/avatar.jpg'%}'">
+                        <div class="image_overlapping" style="align-content: start; text-align: start; margin-top: -60px">
+                        <span class="fa-stack fa-2x">
+                            <a href="{% url "staff-update" pk=profile.pk %}">
+                                <i class="fas fa-circle fa-stack-2x text-info"></i>
+                                <i class="fas fa-edit fa-stack-1x fa-inverse"></i>
+                            </a>
+                        </span>
+                    </div>
+
+                </div>
+            </div>
+            <div class="row my-3">
+                <div style="font-weight: bold" class="col-2 text-right">
+                    <h4>Profilo di</h4>
+                </div>
+                <div class="col">
+                    <h4>{{ profile.name }} {{ profile.surname }} [{{ profile.get_task_display }}]</h4>
+
+                </div>
+            </div>
+            <div class="row border-top py-4">
+                <div style="font-weight: bold" class="col-2 text-right">
+                    <p>Email:</p>
+                    <p>Registrato:</p>
+                </div>
+                <div class="col">
+                    <p>{{ profile.email }}</p>
+                    <p>{{ profile.user.date_joined }}</p>
+                </div>
+            </div>
+            <div class="row border-top py-4">
+                <div style="font-weight: bold" class="col-2 text-right">
+                    <p>Nato/a il:</p>
+                    <p>A:</p>
+                    <p>Residente:</p>
+                    <p>CF:</p>
+                    <p>Contatti: </p>
+                    {% if profile.vat %}<p>P.IVA:</p>{% endif %}
+                </div>
+                <div class="col">
+                    <p>{{ profile.date_of_birth }}</p>
+                    <p>{{ profile.place_of_birth }}</p>
+                    <p>{{ profile.resident_in_address }} - {{ profile.resident_in_city }} ({{ profile.postal_code }})</p>
+                    <p>{{ profile.fiscal_code }}</p>
+                    {% if profile.vat %}<p>{{ profile.vat }}</p>{% endif %}
+                    <p>
+                        {% if profile.telephone %}
+                            {{ profile.telephone }}
+                        {% else %}
+                            Nessun numero indicato
+                        {% endif %}
+                        {% if profile.email %}
+                            - {{ profile.email }}
+                        {% endif %}
+                    </p>
+                </div>
+            </div>
+            <div class="row border-top py-4">
+                <div style="font-weight: bold" class="col-2 text-right">
+                    <p>Curriculum:</p>
+                    <p>Pos. INPS:</p>
+                    <p>Pos. IRPEF:</p>
+                </div>
+                <div class="col">
+                    <p>
+                        {% if profile.curriculum %}
+                            <a href="{{ profile.curriculum.url }}" target="_blank">
+                                <i class="fas fa-file-check text-primary"></i>
+                            </a>
+                        {% else %}
+                            <i class="fas fa-times text-danger"></i>
+                        {% endif %}
+                    </p>
+                    <p>
+                        {% if profile.INPS %}
+                            <i class="fas fa-file-check text-primary"></i>
+                        {% else %}
+                            <i class="fas fa-times text-danger"></i>
+                        {% endif %}
+                    </p>
+                    <p>
+                        {% if profile.IRPEF %}
+                            <i class="fas fa-file-check text-primary"></i>
+                        {% else %}
+                            <i class="fas fa-times text-danger"></i>
+                        {% endif %}
+                    </p>
+                </div>
+            </div>
+            <div class="row border-top py-4">
+                    <div style="font-weight: bold" class="col-2 text-right">
+                        <p>Mansione:</p>
+                    </div>
+                <div class="col">
+                    <p>{{ profile.get_task_display }}</p>
+                </div>
+            </div>
+            {% if profile.related_staff.filter %}
+            <div class="row border-top py-4">
+                <div style="font-weight: bold" class="col-2 text-right">
+                    <p>Unità formative:</p>
+                </div>
+                <div class="col">
+                    {% for agreement in profile.related_staff.filter %}
+                        {{ agreement.training_unit }} <br>
+                    {% endfor %}
+                </div>
+            </div>
+            {% endif %}
+        </div>
+{% endif %}
+{% endblock content %}
+
+

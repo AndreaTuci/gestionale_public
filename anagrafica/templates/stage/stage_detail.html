@@ -1,0 +1,16 @@
+{% extends 'base.html' %}
+{% block content %}
+<div class="container-fluid mt-3">
+    <h3 class="my-3">
+        <a class="d-print-none" href="{% url 'stage-list' %}"><i class="fal fa-chevron-circle-left"></i></a>
+        Stage {{ stage.course }} <a href="{% url 'stage-update' stage.pk %}"><i style="font-size: large" class="fas fa-edit mr-2"></i></a></h3>
+    <h3>{{ stage.start_date }} - {{ stage.end_date }}</h3>
+    <h4 class="mt-5">Elenco delle convenzioni</h4>
+    <ul>
+        {% for student in students %}
+            <li class="my-1"><a href="{% url 'stage-convention-detail' stage.pk student.pk %}">{{ student }}</a></li>
+        {% endfor %}
+    </ul>
+</div>
+{% endblock content %}
+

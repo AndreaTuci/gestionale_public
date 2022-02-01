@@ -1,0 +1,41 @@
+{% extends 'base.html' %}
+{% load crispy_forms_tags %}
+
+{% block content %}
+
+    <h5 class="my-3"><strong>{{ familycommunication.course }}</strong> - Comunicazioni alla famiglia</h5>
+    <div class="row">
+        <div class="col-xl">
+            <form method="POST" enctype="multipart/form-data" class="mb-5">
+                {% csrf_token %}
+                {{ form|crispy }}
+                <button type="submit" class="btn btn btn-outline-dark ml-auto mt-3 rounded-0">Salva</button>
+            </form>
+        </div>
+        <div class="col-xl">
+            {% for student in familycommunication.course.get_students %}
+                <div class="row border-bottom">
+                    <div class="col">
+                        {{ student.surname }} {{ student.name|slice:1 }}.
+                    </div>
+                    <div class="col">
+                        Tel: {% if student.telephone %}{{ student.telephone }}{% endif %}
+                    </div>
+                    <div class="col">
+                        {% if student.parent_role_1 %}{{ student.parent_role_1 }}: {% else %}Madre: {% endif %}
+                        {% if student.parent_telephone_1 %}{{ student.parent_telephone_1 }}{% endif %}
+                    </div>
+                    <div class="col">
+                        {% if student.parent_role_2 %}{{ student.parent_role_2 }}: {% else %}Padre: {% endif %}
+                        {% if student.parent_telephone_2 %}{{ student.parent_telephone_2 }}{% endif %}
+                    </div>
+
+                </div>
+
+            {% endfor %}
+
+        </div>
+    </div>
+
+
+{% endblock content %}

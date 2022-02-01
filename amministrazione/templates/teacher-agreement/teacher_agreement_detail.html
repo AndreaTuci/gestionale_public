@@ -1,0 +1,337 @@
+<!DOCTYPE html>
+{% extends 'base.html' %}
+{% block content %}
+    {% load cloudinary %}
+    {% load static %}
+    <br>
+    <div class="mt-4 mx-5 print-container">
+        <h3 class="text-center"><strong>CONTRATTO DI COLLABORAZIONE</strong></h3>
+        <h4 class="text-center">Ex allegato 7 – CCNL Formazione Professionale</h4>
+        <br>
+        <p>In data {{ agreement.date }}</p>
+        <p class="text-justify">Il Sig. Giovanni Biondi, quale legale rappresentante del Centro di Formazione Professionale Don Giulio Facibeni
+            - con sede in Firenze, Via delle Panche 30 , partita IVA 06840110487 di seguito denominato “Committente”,
+            associazione che svolge attività di Formazione Professionale</p>
+        <p class="text-justify">e il sig. <strong>{{ agreement.employee }}</strong>, nato a {{ agreement.employee.place_of_birth }} il
+            {{ agreement.employee.date_of_birth }}, e residente a {{ agreement.employee.resident_in_city }},
+            in {{ agreement.employee.resident_in_address }}, codice fiscale {{ agreement.employee.fiscal_code }},
+            denominato in seguito “Collaboratore”. </p>
+        <h4>Premessa e condizioni generali del progetto</h4>
+        <p class="text-justify">Al Committente è stato aggiudicato, da parte della Regione Toscana, per l’anno scolastico
+            {{ agreement.school_year }} il corso di {{ agreement.training_unit }}, codice regionale
+            {{ agreement.training_unit.code }}</p>
+        <p>Per la realizzazione dei suddetti corsi, sono necessarie persone esperte nel settore.</p>
+        <p class="text-justify">Per tale scopo, il Committente, ha contattato il suddetto Collaboratore che si è dichiarato disponibile ad
+            impegnarsi in tale attività, con le mansioni di docente di sostegno alla didattica nelle materie teoriche,
+            a partire dal giorno {{ agreement.start_date }} con tutte le incombenze del caso e in coordinamento con
+            l'attività dello stesso Committente.</p>
+        <p>Il Collaboratore prima dell’inizio del rapporto lavorativo dovrà pertanto:</p>
+        <ul>
+            <li>assicurare ogni volta la propria disponibilità all’effettuazione di ciascun corso,</li>
+            <li>sottoporre la successione degli argomenti che intende trattare nel corso a cui partecipa come docente,</li>
+            <li>indicare i giorni e le ore in cui stabilisce di prestare la propria docenza,</li>
+            <li>partecipare alle riunioni che precedono i diversi cicli di corsi per coordinare la propria attività con
+                quella degli altri docenti.</li>
+        </ul>
+        <p class="text-justify">In considerazione di quanto sopra premesso, e tale premessa costituisce aspetto essenziale ed integrante del presente atto, e degli accordi verbali intercorsi, si conviene e stipula quanto sotto descritto.
+            <br>L'incarico si intende conferito alle seguenti condizioni: </p>
+        <ol>
+            <li class="mb-3"><strong>Oggetto del contratto e durata</strong></li>
+
+                <ol type="A">
+                    <li class="text-justify">
+                        Il Collaboratore, per gli accordi intercorsi e ai sensi del presente Contratto, si impegna a
+                        fornire al Committente con lavoro personale e senza vincolo di subordinazione i propri
+                        servizi per il periodo dalla data suddetta fino al termine delle lezioni fissato al
+                        {{ agreement.end_date }}
+                    </li>
+                    <li class="text-justify">
+                        Il Committente con il presente accordo affida al Collaboratore l'incarico
+                        di svolgere le mansioni convenute, coordinandosi per le sue personali esigenze didattiche e
+                        operative con la direzione scolastica, dichiarandosi il Collaboratore stesso disponibile ad
+                        assumere tale incarico di responsabilità qualora le esigenze lo richiedano. In quest'ambito si
+                        dovrà verificare un costante scambio di informazioni in merito al progressivo completamento del
+                        programma di docenza fornito dall’aggiudicante, sulle difficoltà che dovessero insorgere, sul
+                        rispetto dei tempi previsti e concordati con lo stesso ente appaltante.
+                    </li><div class="new-page"></div>
+                    <li class="text-justify">
+                        L’attività di collaborazione potrà essere svolta dal Collaboratore sia nei locali della
+                        Committente sia in altre sedi che il Collaboratore, in accordo preventivo con il Committente,
+                        dovesse ritenere propedeutiche alla propria docenza, pur sempre nel rispetto di tutte le norme
+                        sulla sicurezza. Qualora enti pubblici o privati si rendano disponibili a collaborare fornendo
+                        l’accesso a strutture operative, l’uso di materiali e ogni altra possibilità che incrementi il
+                        risultato, la Direzione valuterà la circostanza per concedere l’autorizzazione all’utilizzo di
+                        tali opportunità.
+                    </li>
+                    <li class="text-justify">
+                        Il Collaboratore dovrà occuparsi di organizzare il proprio lavoro in maniera conforme alle
+                        indicazioni contenute nella Convenzione che regola il progetto coordinandosi con il Committente.
+                    </li>
+                    <li class="text-justify">
+                        Il presente incarico non potrà avere durata superiore a quella del progetto nel cui ambito viene
+                        svolto e avrà termine con la fine dello stesso. Non sono previsti, né prevedibili, rinnovi dello
+                        stesso incarico salvo proroghe della Convenzione sopra menzionata da parte dell’Ente partner.
+                        In tal caso la prosecuzione della presente collaborazione fra Committente e Collaboratore sarà
+                        oggetto di un nuovo contratto scritto, svincolato dal presente, e non esistono impegni precostituiti
+                        da parte di entrambi a che ciò debba praticamente realizzarsi.
+                    </li>
+                    <li class="text-justify">
+                        Il Collaboratore, nell’ambito degli orari da lui indicati, può sottoporre la partecipazione di
+                        persona da lui ritenuta idonea ad effettuare con la necessaria professionalità e competenze la
+                        trattazione di particolari argomenti nella materia oggetto del presente contratto. Di regola tale
+                        affiancamento oltre ad ottenere il consenso della direzione non dovrà comportare alcun aggravio
+                        di costi per la scuola.
+                    </li>
+                </ol>
+
+            <li class="my-3"><strong>Il Collaboratore dichiara e garantisce che:</strong></li>
+            <ol type="A">
+                <li>
+                    nello svolgere l'attività non viola diritti di terzi o impegni nei confronti di terzi, sia all'estero che in Italia;
+                </li>
+                <li>
+                    non gli è inibito di svolgere l'attività ai sensi di leggi o altre disposizioni applicabili, sia in Italia che all'estero;
+                </li>
+                <li>
+                    l’attività svolta non rientra nell’oggetto dell’arte o professione eventualmente esercitata;
+                </li>
+                <li class="text-justify">
+                    1 - non è iscritto ad alcuna forma di previdenza obbligatoria e non è pensionato di alcun Ente nazionale
+                    od estero e che si iscriverà, come impone la legislazione vigente, ai registri della gestione separata
+                    della sede INPS di appartenenza;
+                    <br>
+                    2 - oppure: è iscritto alla seguente forma assicurativa obbligatoria
+                    <br>
+                    3 - oppure: è pensionato (specificare se di vecchiaia, anzianità, ecc.)
+                </li>
+                <li class="text-justify">
+                    Per tale incarico sarà corrisposto un compenso di €. {{ agreement.wage }} al lordo di ogni trattenuta previdenziale
+                    e fiscale che il Committente dovrà operare in forza di legge.
+                </li>
+                <li class="text-justify">
+                    Il Collaboratore presenterà mensilmente il prospetto riepilogativo dell’attività prestata e degli
+                    eventuali rimborsi dovutigli, Il compenso verrà corrisposto mensilmente, entro il giorno 10 del mese
+                    successivo a quello in cui è stata prestata la collaborazione, sulla base dell’attività prestata e
+                    di quanto altro dovuto, mediante prospetto paga cosi come definito dalla Legge 342/2000 e successive
+                    disposizioni in materia di assimilazione fiscale.
+                </li>
+                <li class="text-justify">
+                    Quanto al rimborso delle spese sostenute e documentate dal Collaboratore, per viaggio, vitto e alloggio,
+                    comunque relative a prestazioni rese fuori dal proprio comune di domicilio fiscale o dalla sede della
+                    Committente dove viene prestata la collaborazione, così come per ogni altra spesa documentata si
+                    dovesse rendere necessaria per l’esecuzione del presente contratto, lo stesso spetterà solo se le trasferte
+                    e le altre spese siano state preventivamente autorizzate del Committente.
+                </li>
+                <li class="text-justify">
+                    In ogni caso di cessazione del presente contratto, il Collaboratore avrà diritto ai corrispettivi
+                    maturati per l’attività prestata.
+                </li>
+            </ol>
+            <li class="my-3"><strong>Assenza di subordinazione.</strong></li>
+            <ol type="A">
+                <li class="text-justify">
+                    La collaborazione oggetto del presente contratto è resa dal Collaboratore nel rispetto delle modalità
+                    di cui all'art. 2222 del C.C. all'art. 409 n. 3 cod. Proc. civ. dall’art 2 decreto legislativo
+                    n. 81/2015 , nel contesto di un rapporto che, date le norme richiamate, le modalità di esecuzione
+                    e per l'esplicita volontà delle parti, deve essere considerato, a tutti gli effetti, un rapporto di
+                    prestazione autonoma per l'attuazione della specifica fase del programma di lavoro assegnato al
+                    Collaboratore.
+                </li><div class="new-page"></div>
+                <li class="text-justify">
+                    Tale rapporto non avrà pertanto alcun carattere di rapporto di lavoro subordinato bensì comporterà,
+                    nell'attuazione dell'incarico affidatogli e nella realizzazione del programma di collaborazione,
+                    di cui al punto 1, l'operare in autonomia da parte del Collaboratore, con le modalità che riterrà
+                    più opportune, in totale libertà di svolgimento dell'incarico, senza alcun vincolo di subordinazione
+                    e senza assoggettamenti gerarchici, disciplinari, mantenendo però un costante coordinamento in termini
+                    di obiettivi, risultati e scadenze, secondo le specifiche dell’incarico concordate con il Committente
+                    e secondo le variabili che il Committente a sua volta potrebbe riceve caso per caso dall’Ente con il
+                    quale è convenzionata.
+                </li>
+            </ol>
+            <li class="my-3"><strong>Responsabilità del Collaboratore</strong></li>
+            <ol type="A">
+                <li>
+                    Il Collaboratore è tenuto ad operare con la dovuta diligenza e perizia.
+                </li>
+                <li>
+                    Il Collaboratore sarà responsabile dei danni subiti direttamente ed indirettamente dal Committente
+                    in caso di violazione per dolo o colpa grave nell’espletamento della attività prestata  e degli obblighi
+                    relativi alla riservatezza di cui al punto seguente.
+                </li>
+            </ol>
+            <li class="my-3"><strong>Riservatezza - segretezza</strong></li>
+            <ol type="A">
+                <li class="text-justify">
+                    Il Collaboratore si impegna a mantenere la massima segretezza e a non divulgare, per nessuna ragione,
+                    le informazioni concernenti il Committente e le relative attività specifiche di cui lo stesso potrà
+                    venire a conoscenza nel corso dello svolgimento del contratto.
+                </li>
+                <li class="text-justify">
+                    Il mancato rispetto di quanto previsto in materia di segretezza, costituirà causa di risoluzione
+                    immediata del contratto e di contestuale richiesta di risarcimento dei danni. Tale impegno resta
+                    valido anche per il periodo successivo alla durata e conclusione del contratto e fino a che le
+                    informazioni diverranno di pubblico dominio.
+                </li>
+            </ol>
+            <li class="my-3"><strong>Recesso dal contratto</strong></li>
+            <ol type="A">
+                <li class="text-justify">
+                    Il contratto si risolve al momento del completamento del progetto o programma  o della fase di esso
+                    che ne costituisce l’oggetto. In ogni caso le parti possono recedere prima della scadenza del termine
+                    per giusta causa  ovvero in caso di impedimento, riconducibile a motivazioni diverse rispetto a quelle
+                    elencate al successivo punto 8), che oggettivamente non consenta al Collaboratore lo svolgimento
+                    dell’incarico per un periodo protratto per più di trenta giorni continuativi ovvero per un periodo
+                    non continuativo di trenta giorni nel corso di sei mesi consecutivi.
+                </li>
+                <li class="text-justify">
+                    Le parti contraenti possono recedere in qualsiasi momento prima della scadenza, mediante comunicazione
+                    scritta con preavviso di trenta giorni , senza obbligo di indennizzo alcuno.
+                </li>
+            </ol>
+            <li class="my-3"><strong>Modifiche del contratto</strong></li>
+            <ol type="A">
+                <li class="text-justify">
+                    Le disposizioni del presente contratto non possono essere modificate, né possono essere oggetto di
+                    rinuncia (fatte salve le ipotesi di cui al precedente punto "recesso dal contratto"), a meno che
+                    tali modifiche o rinunce siano concordate per iscritto dal Collaboratore e dal Committente.
+                </li>
+            </ol>
+            <li class="my-3"><strong>Assenze per malattia, infortunio, maternità, congedi parentali. gravi motivi personali.</strong></li>
+            <ol type="A">
+                <li class="text-justify">
+                    In caso di malattia il rapporto contrattuale con il Collaboratore rimane sospeso, con il riconoscimento
+                    delle indennità prevista dalla legge, per non più di 60 (sessanta) giorni.
+                </li>
+                <li class="text-justify">
+                    In caso di ricovero ospedaliero o gravidanza, il rapporto contrattuale rimane sospeso, con il riconoscimento
+                    delle indennità prevista dalla legge, per non più di 180 (centottanta) giorni.
+                </li>
+                <li class="text-justify">
+                    In caso di comprovati motivi, congedi parentali e matrimonio il rapporto contrattuale rimane sospeso,
+                    senza erogazione del corrispettivo, per non più di 30 (trenta) giorni.
+                </li>
+                <li class="text-justify">
+                    In caso di infortunio sul lavoro, il rapporto contrattuale rimane sospeso fino a guarigione clinica
+                    fermo restando quanto previsto ai successivi punti e) ed f).
+                </li>
+                <li class="text-justify">
+                    In caso di malattia e infortunio la sospensione del contratto non comporta una proroga della durata
+                    del contratto, che si estingue alla scadenza.
+                </li>
+                <li class="text-justify">
+                    In caso di sospensione il contratto si estingue comunque alla scadenza prevista al punto "oggetto
+                    del contratto e durata".
+                </li>
+            </ol><div class="new-page"></div>
+            <li class="my-3"><strong>Comunicazioni</strong></li>
+            <ol type="A">
+                <li class="text-justify">
+                    Qualsivoglia comunicazione ai sensi del presente contratto dovrà essere effettuata per iscritto e,
+                    anche se preceduta da fax o messaggio di posta elettronica, dovrà essere inviata a mezzo di lettera
+                    raccomandata AR, indirizzata all'ultimo indirizzo noto o domicilio o sede legale.
+                </li>
+
+            </ol>
+            <li class="my-3"><strong>Completezza del contratto</strong></li>
+            <ol type="A">
+                <li class="text-justify">
+                    Il presente contratto contiene l'intero accordo delle parti ed il Collaboratore dà atto di non avere
+                    fatto affidamento su alcuna altra dichiarazione, garanzia o intesa, orale o scritta, da parte della
+                    Committente o di suoi dipendenti o collaboratori.
+                </li>
+
+            </ol>
+            <li class="my-3"><strong>Privacy</strong></li>
+            <ol type="A">
+                <li class="text-justify">
+                    Con riferimento all'allegata informativa ex articolo 13 del D.LGS n. 196/03, preso  atto di tale
+                    informativa e dei diritti a Lei riconosciuti dall’articolo 7 del D.LGS n. 196/03, il Collaboratore
+                    sottoscrivendo la presente acconsente al trattamento, ivi compresa la comunicazione, dei propri dati
+                    personali ad opera del titolare e/o del responsabile del trattamento stesso, per le finalità e nei
+                    limiti indicati dalla menzionata informativa, che si allega alla presente quale parte integrante e
+                    sostanziale del contratto stesso.
+                </li>
+
+            </ol>
+            <li class="my-3"><strong>Annotazioni</strong></li>
+            <ol type="A">
+                <li class="text-justify">
+                    Il rapporto di cui al presente contratto si sostanzia in una collaborazione resa dal Collaboratore
+                    in una fase del progetto di lavoro relativo all'oggetto di cui al punto l che, ai sensi dell' art. 34
+                    della Legge n. 342/2000, è assimilata, ai fini dell'applicazione delle ritenute IRPEF, al lavoro
+                    dipendente, ai sensi dell'art. 47, comma l, lettera c. bis, del D.P.R. 917/1986.
+                </li>
+                <li class="text-justify">
+                    All'atto del pagamento del compenso si provvederà, ai sensi degli artt. 23 e 24 del D.P.R. n. 600/1973,
+                    ad operare la ritenuta calcolando la stessa sulla base dell'aliquota progressiva degli scaglioni di
+                    reddito del Collaboratore; al netto delle detrazioni di imposta sia per carichi di famiglia (art. 12/TUIR)
+                    che per quelli di lavoro dipendente (art. 13/ TUIR) sulla base della periodicità del pagamento del compenso,
+                    così come stabilito dal contratto.
+                </li>
+                <li class="text-justify">
+                    Il compenso costituente il corrispettivo delle prestazioni rese dal Collaboratore resta escluso
+                    dall'applicazione dell'Imposta sul Valore Aggiunto, inquadrandosi il rapporto nella previsione di cui
+                    all'art. 5, lettera a, del D.P.R. 633/1972.
+                </li>
+                <li class="text-justify">
+                    Il compenso pattuito rientra nelle previsioni dell'art. 2, commi 26-30, della Legge n. 335/1995 e,
+                    nel rispetto delle norme vigenti in materia, l'azienda opererà la ritenuta del contributo previdenziale
+                    per lavoro autonomo ed il percipiente dovrà documentare la sua iscrizione alla gestione speciale di
+                    cui all'art. 2, comma 26 della Legge n. 335/1995 e all'art. 59, comma 16, della Legge n. 449/1997.
+                </li>
+                <li class="text-justify">
+                    Il Committente, ai sensi dell'art. 5 del D.L.vo n. 38/2000 sull'obbligo assicurativo dei lavoratori
+                    parasubordinati e a conoscenza degli adempimenti previsti dal T.U. dell'Inail (D.P.R. n. 1124/1965)
+                    provvederà alla regolare iscrizione del Collaboratore e ad operare la ritenuta di un terzo del premio
+                    assicurativo ad avvenuto pagamento dello stesso alle normali scadenze di legge.
+                </li>
+            </ol>
+            <li class="my-3">
+                <strong>Art. 8 Diritti sindacali</strong>
+                <br>
+                <p class="text-justify">Al fine di regolamentare la possibilità di esercitare ed esigere i diritti sindacali, si definisce
+                    quanto segue:</p>
+            </li>
+            <ol type="A">
+                <li class="text-justify">
+                    Il Collaboratore nell'ambito della propria attività giornaliera concordata ha diritto di partecipare
+                    alle eventuali assemblee sindacali, senza decurtazioni del relativo compenso se coincidente con quello
+                    dell'attività programmata, previa specifica comunicazione delle OO.SS. firmatarie del CCNL Formazione
+                    Professionale;
+                </li>
+
+            </ol><div class="new-page"></div>
+            <li class="my-3"><strong>Legge applicabile e giurisdizione</strong></li>
+            <ol type="A">
+                <li class="text-justify">
+                    Il presente contratto di collaborazione è governato dalla legge italiana.
+                </li>
+                <li class="text-justify">
+                    Qualunque controversia che dovesse insorgere in merito all'esistenza, validità, efficacia ed inefficacia
+                    del presente contratto, nonché della sua interpretazione, esecuzione, risoluzione e che non possa
+                    essere risolta consensualmente, sarà demandata al Foro di Firenze, competente per materia.
+                </li>
+            </ol>
+            <li class="my-3"><strong>Disposizione finale</strong></li>
+            <ol type="A">
+                <li class="text-justify">
+                    Le parti stipulanti si impegnano ad adeguare tempestivamente il presente accordo contrattuale alle
+                    eventuali nuove disposizioni normative che dovessero essere emanate in materia mediante specifica
+                    sequenza contrattuale.
+                </li>
+            </ol>
+        </ol>
+        <p>Letto, confermato e sottoscritto.</p>
+        <p>Il Committente <br><br>______________________________</p>
+        <p>Il Collaboratore <br><br>______________________________</p>
+        <p>Firenze, il {{ agreement.date }}</p>
+        <p class="text-justify">
+            Vengono espressamente approvati dal Collaboratore gli articoli (Oggetto del contratto e durata),
+            (Assenza di subordinazione), (Recesso anticipato), (Riservatezza e segretezza) e
+            (Legge applicabile e giurisdizione)
+        </p>
+        <p>Il Collaboratore <br><br>______________________________</p>
+    </div>
+{% endblock content %}
+
+

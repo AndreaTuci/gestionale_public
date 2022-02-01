@@ -1,0 +1,31 @@
+{% extends 'base.html' %}
+{% block content %}
+        <div class="container-fluid mt-4">
+            <h3>
+                {{ trainingunit }} <a href="{% url 'trainingunit-update' trainingunit.pk %}"><i style="font-size: large" class="fas fa-edit mr-2"></i></a>
+            </h3>
+            <br>
+            <p style="font-size: x-large">
+                Ore rimanenti: <span class="text-info">{{ trainingunit.hours_remaining }}/{{ trainingunit.hours_expected }}</span>
+            </p>
+            <p style="font-size: x-large">
+                Docente incaricato: <span class="text-info">{% for agreement in trainingunit.contract_related_unit.filter %}{{ agreement.employee.name }} {{ agreement.employee.surname }}{% endfor %}  </span>
+            </p>
+        <button onclick="window.location.href='{% url 'teacher-list' %}'"
+                type="submit"
+                class="btn btn-lg btn-outline-dark rounded-0 d-print-none mb-5">
+            < Vai all'elenco docenti
+        </button>
+        <button onclick="window.location.href='{% url 'trainingunit-list' %}'"
+                type="submit"
+                class="btn btn-lg btn-outline-dark rounded-0 d-print-none mb-5">
+            < Vai all'elenco UF
+        </button>
+
+            <h4 class="border-bottom">Elenco delle UF del corso {{ trainingunit.course }}</h4>
+            {% for unit in units_in_course %}
+                <p style="font-size: large" class="ml-3">UF {{ unit.code }}: <a href="{% url 'trainingunit-detail' unit.pk %}">{{ unit.name }}</a></p>
+            {% endfor %}
+        </div>
+
+{% endblock content %}

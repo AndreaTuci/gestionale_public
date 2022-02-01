@@ -1,0 +1,26 @@
+{% extends 'base.html' %}
+{% block content %}
+    <div class="container-fluid mt-3">
+        <h3>Nota per {{ note.student }} del {{ note.created_at }} <a href="{% url 'note-update' note.pk %}"><i style="font-size: large" class="fas fa-edit mr-2"></i></a></h3>
+        {% if note.reminder %}<p><i class="fal fa-alarm-exclamation"></i> Promemoria fissato per il giorno {{ note.reminder_date }}</p>{% endif %}
+        <p class="mt-4">{{ note.note_text }}</p>
+        <p>Inserita da {{ note.created_by.profile }}</p>
+        <form id="mark_solved" method="post">
+            {% csrf_token %}
+            {% if note.reminder %}
+            <input id='reminder' type="checkbox" class="checkbox mb-3" name="reminder" value="True">
+            <label for="reminder" class="label mb-3">Rimuovi il promemoria</label>
+            {% endif %}
+            <input id='check' type="checkbox" class="checkbox mb-3" name="solved" value="True">
+            <label for="check" class="label mb-3">Situazione risolta (archivia nota)</label>
+            <hr>
+            <button onclick="window.location.href='{% url 'note-list' %}'"
+                    type="submit"
+                    class="btn btn-lg btn-outline-dark rounded-0 mt-5 d-print-none">
+                < Torna indietro
+            </button>
+        </form>
+
+    </div>
+
+{% endblock content %}

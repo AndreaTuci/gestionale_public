@@ -1,0 +1,12 @@
+{% extends 'base.html' %}
+{% load crispy_forms_tags %}
+{% block content %}
+
+    <h5 class="my-3"><strong>{{ staff }}</strong></h5>
+    <form method="POST" enctype="multipart/form-data" class="mb-5">
+        {% csrf_token %}
+        <p>Richiede l'attivazione con ruolo <strong>{{ staff.get_task_display }}</strong></p>
+        <button type="submit" class="btn btn btn-outline-dark ml-auto mt-3">Attiva</button>
+    </form>
+
+{% endblock content %}

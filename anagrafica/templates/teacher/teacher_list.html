@@ -1,0 +1,96 @@
+{% extends 'base.html' %}
+{% load cloudinary %}
+{% load static %}
+
+{% block content %}
+    {% if request.user.is_staff %}
+
+    {% endif %}
+    <div class="mr-auto p-2 border-bottom"><h2>Personale scolastico</h2></div>
+
+    <div class="mr-auto p-2"><h3>Uffici</h3></div>
+    <div class="table-responsive">
+        <table class="table table-bordered table-hover">
+            <tbody>
+                {% for staff in backoffice %}
+                    {% ifchanged %}
+                        <tr class="bg-light"><td colspan="3"><h5>{{ staff.get_task_display|upper }}</h5></td></tr>
+                    {% endifchanged %}
+                    <tr>
+                        <th class="align-middle" scope="row">
+                            <img class="crop my-2 ml-2 mr-4" style="border-radius: 50%; height: 100px; width: 100px" src="{{ staff.avatar.url }}" alt="Profile image" onerror="this.src='{% static 'images/avatar.jpg'%}'">
+                            <a href="{% url 'staff-detail' staff.pk %}">
+                            {{ staff.name }} {{ staff.surname }}</a>
+                        </th>
+                        <td class="align-middle text-center">
+                            {% if staff.telephone %}{{ staff.telephone }}{% endif %}
+                        </td>
+                        <td class="align-middle text-center">
+                            {{ staff.user.email }}
+                        </td>
+                    </tr>
+                {% endfor %}
+            </tbody>
+        </table>
+    </div>
+
+
+    <div class="mr-auto p-2"><h3>Insegnanti</h3></div>
+    <div class="table-responsive">
+        <table class="table table-bordered table-hover">
+            <thead class="text-center">
+                <tr>
+                    <th scope="col">Nome</th>
+                    <th scope="col">Unità formative</th>
+                    <th scope="col">Contatti</th>
+                </tr>
+            </thead>
+            <tbody>
+                {% for teacher in teacher_list %}
+                    {% if teacher.related_staff.filter %}
+                    <tr>
+                        <th class="align-middle" scope="row">
+                            <a href="{% url 'staff-detail' teacher.pk %}">{{ teacher.name }} {{ teacher.surname }}</a>
+                        </th>
+                        <td class="align-middle">
+                            {% for agreement in teacher.related_staff.filter %}
+                                <div class="row ">
+                                <div class="col text-right">
+                                    <a href="{% url 'trainingunit-detail' agreement.training_unit.pk %}">
+                                        {{ agreement.training_unit }}:
+                                    </a>
+                                </div>
+                                <div class="col text-left">
+                                {% if agreement.training_unit.uf_send_related_lesson.filter %}
+                                    {% for lesson in agreement.training_unit.uf_send_related_lesson.filter %}
+                                        {{ lesson.day }} ({{ lesson.hour }}) |
+                                    {% endfor %}
+                                {% else %}
+                                    <span class="bg-light d-block text-center border-bottom border-white">---</span>
+                                {% endif %}
+                                </div>
+                                </div>
+                            {% endfor %}
+                        </td>
+                        <td class="align-middle text-left">
+                            {{ teacher.user.email }}
+                            {% if teacher.telephone %}
+                                <br>Tel. {{ teacher.telephone }}
+                            {% endif %}
+                            {% if teacher.email %}
+                                <br>E-mail: {{ teacher.email }}
+                            {% endif %}
+                        </td>
+                    </tr>
+                    {%  endif %}
+                {% endfor %}
+            </tbody>
+        </table>
+    </div>
+
+
+
+{% endblock content %}
+
+
+

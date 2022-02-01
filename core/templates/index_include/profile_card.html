@@ -1,0 +1,75 @@
+{% load static %}
+<div class="card my-4 border-0" style="width: 18rem;">
+    <div class="align-content-center">
+        <img class="card-img-top my-2 ml-2 p-0 crop" style="border-radius: 50%; height: 270px; width: 270px" src="{{ user_data.avatar.url }}" alt="Profile image" onerror="this.src='{% static 'images/avatar.jpg'%}'">
+        <div class="image_overlapping">
+            <span class="fa-stack fa-2x">
+                <a href="{% url 'staff-update' pk=request.user.profile.pk %}">
+                    <i class="fas fa-circle fa-stack-2x text-info"></i>
+                    <i class="fas fa-edit fa-stack-1x fa-inverse"></i>
+                </a>
+            </span>
+        </div>
+        <div class="card-body">
+
+
+
+        <h4 class="card-text"><a href="{% url 'staff-detail' pk=request.user.profile.pk %}"><strong>{{ user_data.first_name }}</strong></a> [{{ user_data.role }}]</h4>
+            {% if not request.user.profile.curriculum %}
+                <p class="text-danger my-1">[CV mancante]</p>
+            {% endif %}
+            {% if request.user.profile.contract_type == 'C' %}
+            {% if not request.user.profile.INPS %}
+                <p class="text-danger my-1">[INPS mancante]</p>
+            {% endif %}
+            {% if not request.user.profile.IRPEF %}
+                <p class="text-danger my-1">[IRPEF mancante]</p>
+            {% endif %}
+            {% endif %}
+            {% if user.is_superuser %}
+                <div class="my-1">
+                    <a href="{% url 'create-student-user' %}"><i style="font-size: large" class="fal fa-book-user mr-2"></i></a>
+                    <a href="{% url 'timecard-list' user_data.user_pk %}"><i style="font-size: large" class="fal fa-calendar-edit mr-2"></i></a>
+                    <a href="{% url 'generate-badges' %}"><i class="fal fa-wand-magic"></i></a>
+                    <a href="{% url 'regione-upload-students' %}">@</a>
+
+                </div>
+            {% endif %}
+            {% if user_data.role == 'Tutor' %}
+                <form method="POST" enctype="multipart/form-data" class="form-inline">
+                    {% csrf_token %}
+                    <div class="form-group">
+                        <input class="input-group input-group-lg" autocomplete="off" autofocus="True" type="text" placeholder="Timecard" name="employee" id="employee">
+                        <a href="{% url 'timecard-detail' user_data.user_pk month year %}"><i class="fal fa-2x fa-calendar-week ml-3"></i></a>
+                    </div>
+                </form>
+                {% if post %}
+                    {% if post == 'errore' %}
+                        <div class="alert alert-danger mt-2 rounded-0" role="alert">
+                            Nessun dipendente corrisponde
+                        </div>
+                    {% else %}
+                        <div class="alert alert-success mt-2 rounded-0" role="alert">
+                            {{ post }}
+                        </div>
+                    {% endif %}
+                {% endif %}
+                <div class="text-center my-2">
+  <img style="width: 100%;" alt='Barcode Generator TEC-IT'
+       src='https://barcode.tec-it.com/barcode.ashx?data={{ user_data.user_barcode }}&code=&multiplebarcodes=false&translate-esc=true&unit=Fit&dpi=96&imagetype=Gif&rotation=0&color=%23000000&bgcolor=%23ffffff&codepage=Default&qunit=Mm&quiet=0&hidehrt=True'/>
+  <a href='https://www.tec-it.com' title='Barcode Software by TEC-IT' target='_blank'>
+    TEC-IT Barcode Generator<br/>
+  </a>
+                </div>
+
+            {% endif %}
+        <p>{{ phrase }}</p>
+        </div>
+    </div>
+</div>
+
+<script>
+    $(window).on('load', function() {
+        document.getElementById("employee").focus();
+    });
+</script>

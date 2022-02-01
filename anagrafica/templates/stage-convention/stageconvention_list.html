@@ -1,0 +1,39 @@
+{% extends 'base.html' %}
+
+{% block content %}
+
+    {% if request.user.is_staff %}
+
+    {% endif %}
+
+    <div class="d-flex">
+        <div class="mr-auto p-2"><h2>Lista</h2></div>
+        <div class="p-2"><form action="{% url 'stageconvention-create' %}"> <button type="submit" class="btn btn-outline-dark"><i class="fas fa-plus"></i> Aggiungi</button></form></div>
+    </div>
+    <div class="table-responsive">
+        <table class="table table-bordered table-hover">
+            <thead class="text-center">
+                <tr>
+                  <th scope="col">Studente</th>
+                  <th scope="col">Ditta</th>
+                  <th scope="col">Data</th>
+                </tr>
+            </thead>
+            <tbody class="text-center">
+                {% for convention in stageconvention_list %}
+                    <tr>
+                      <th scope="row">{{ convention.student }}</th>
+                      <td><a href="">{{ convention.company }}</a></td>
+                      <td>{{ convention.date }}</td>
+                    </tr>
+                {% endfor %}
+            </tbody>
+        </table>
+    </div>
+
+
+
+{% endblock content %}
+
+
+

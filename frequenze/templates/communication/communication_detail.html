@@ -1,0 +1,18 @@
+{% extends 'base.html' %}
+{% block content %}
+    <div class="container-fluid mt-3">
+        <h3><span class="d-print-none">
+                            <a href="{% url 'communication-list' course %}"> <i class="fal fa-chevron-circle-left"></i></a>
+                        </span>Comunicazioni alle famiglie per il corso {{ communication.course }} di {{ communication.month }}/{{ communication.year }}</h3>
+        <form method="post">
+            {% csrf_token %}
+            <div class="form-group">
+                <label for="exampleFormControlTextarea1"></label>
+                <textarea class="form-control border-0 bg-white" disabled name='text' id="exampleFormControlTextarea1" rows="10">{{ communication.text }} </textarea>
+            </div>
+        </form>
+
+
+    </div>
+
+{% endblock content %}

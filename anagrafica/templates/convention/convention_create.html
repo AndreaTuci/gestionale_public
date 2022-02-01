@@ -1,0 +1,55 @@
+{% extends 'base.html' %}
+{% load crispy_forms_tags %}
+
+{% block content %}
+
+<h5 class="my-3">Inserisci una nuova convenzione di Stage</h5>
+<form method="POST" enctype="multipart/form-data" class="mb-5">
+    {% csrf_token %}
+    <div class="form-group">
+        <div class="row">
+            <div class="col-5">
+                <div>{{ form.student|as_crispy_field }}</div>
+                <div>{{ form.company|as_crispy_field }}</div>
+                <div>
+                    <label>Stipulata in data*</label>
+                    {{ form.date }}
+                </div>
+                <div class="border-top mt-5 pt-2">
+                    <label>Inizio stage*</label>
+                    {{ form.begin }}
+                </div>
+                <div>
+                    <label>Fine stage*</label>
+                    {{ form.end }}
+                </div>
+            </div>
+            <div class="col-7">
+                {{ form.schedule|as_crispy_field }}
+                <div>{{ form.company_tutor|as_crispy_field }}</div>
+                <div>{{ form.school_tutor|as_crispy_field }}</div>
+            </div>
+        </div>
+        <div class="row mt-2 border-top">
+            <div class="col-5">
+                <div>{{ form.return_hour|as_crispy_field }}</div>
+                <div>
+                    <label>Primo rientro</label>
+                    {{ form.return_day_one }}
+                </div>
+                <div>
+                    <label>Secondo rientro</label>
+                    {{ form.return_day_two }}
+                </div>
+                <div>
+                    <label>Terzo rientro</label>
+                    {{ form.return_day_three }}
+                </div>
+            </div>
+        </div>
+    </div>
+    <button type="submit" class="btn btn btn-outline-dark ml-auto mt-3">Salva</button>
+</form>
+
+
+{% endblock content %}

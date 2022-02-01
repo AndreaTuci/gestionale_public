@@ -1,0 +1,31 @@
+{% extends 'base.html' %}
+
+{% block content %}
+
+    {% if request.user.is_staff %}
+
+    {% endif %}
+    <div class="mr-auto p-2"><h2><span class="d-print-none">
+                            <a href="{% url 'course-detail' course %}"> <i class="fal fa-chevron-circle-left"></i></a>
+                        </span>Comunicazioni alle famiglie</h2></div>
+    <table class="table table-bordered table-hover">
+
+        <tbody class="text-center">
+        {% for communication in list %}
+            <tr>
+                <td>
+                    <a href="{% url 'communication-detail' communication.pk %}">
+                        <h4>{{ communication }}</h4>
+                    </a>
+                </td>
+            </tr>
+    {% endfor %}
+        </tbody>
+    </table>
+
+
+
+{% endblock content %}
+
+
+

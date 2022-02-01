@@ -1,0 +1,314 @@
+{% extends 'base.html' %}
+{% block content %}
+    <div class="row mt-3 ml-3">
+        <div class="d-flex">
+            <div class="btn-group btn-group-lg my-3 mr-5" role="group">
+                <button onclick="window.location.href='{% url 'course-detail' course %}'"
+                        type="submit"
+                        class="btn btn-outline-info rounded-0">
+                    < Torna al registro
+                </button>
+            </div>
+            <div class="btn-group btn-group-lg my-3" role="group">
+                <button style="width: 100px"
+                        onclick="window.location.href='{% url 'studentattendance-new-create' course date_nav.sub_week %}'"
+                        type="submit"
+                        class="btn btn-outline-dark border-right-0 rounded-0">
+                    <i class="fal fa-caret-circle-left"></i> -7gg
+                </button>
+            </div>
+            <div class="btn-group btn-group-lg my-3" role="group">
+                <button style="width: 100px"
+                        onclick="window.location.href='{% url 'studentattendance-new-create' course date_nav.sub_day %}'"
+                        type="submit"
+                        class="btn btn-outline-dark rounded-0">
+                    <i class="fal fa-caret-left"></i> -1g
+                </button>
+            </div>
+            <div class="mt-4 mx-3"><h3>{{ date_obj }}</h3></div>
+            <div class="btn-group btn-group-lg my-3" role="group">
+                <button style="width: 100px"
+                        onclick="window.location.href='{% url 'studentattendance-new-create' course date_nav.add_day %}'"
+                        type="submit"
+                        class="btn btn-outline-dark border-right-0 rounded-0">
+                    <i class="fal fa-caret-right"></i> +1g
+                </button>
+            </div>
+            <div class="btn-group btn-group-lg my-3" role="group">
+                <button style="width: 100px"
+                        onclick="window.location.href='{% url 'studentattendance-new-create' course date_nav.add_week %}'"
+                        type="submit"
+                        class="btn btn-outline-dark rounded-0">
+                    <i class="fal fa-caret-circle-right"></i> +7gg
+                </button>
+            </div>
+            {% if message %}
+            <div class="alert alert-success rounded-0 mt-3 pt-3 ml-3" role="alert">
+                <h5>{{ message }}</h5>
+            </div>
+            {% endif %}
+        </div>
+    </div>
+    <form class="form mx-3 mb-5"
+          method="post"
+          id="formsetAttendances">
+        {% csrf_token %}
+        <div class="row my-3">
+            <div class="col">
+                <input class="btn btn-lg btn-outline-dark btn-block rounded-0"
+                           type="button"
+                           value="Salva"
+                           data-toggle="modal"
+                           data-target="#saveConfirmModal">
+            </div>
+        </div>
+        {% for student in attendance_list %}
+            <div class="row border-bottom mx-1 pt-2 {% cycle 'odd_row' 'even_row' as rowcolors %}">
+                <div class="col-3 text-right pt-2">
+                    <h5>{{ student.student_obj.number }} - {{ student.student_obj|upper }}</h5>
+                </div>
+                <div class="col">
+                    <div class="custom-control custom-radio custom-control-inline">
+                        <input type="radio" {% if student.attendance == "P" %} checked {% endif %} id="{{ student.key }}_1" name="{{ student.key }}" value="P" >
+                        <label value="P" for="{{ student.key }}_1">P</label>
+{#            checked= "checked"#}
+                    </div>
+                    <div class="custom-control custom-radio custom-control-inline">
+                        <input type="radio" {% if student.attendance == "R" %} checked {% endif %} id="{{ student.key }}_2" name="{{ student.key }}" value="R" >
+                        <label value="R"  for="{{ student.key }}_2">R</label>
+                    </div>
+                    <div class="custom-control custom-radio custom-control-inline">
+                        <input type="radio" {% if student.attendance == "G" %} checked {% endif %} id="{{ student.key }}_7" name="{{ student.key }}" value="G" >
+                        <label value="G" for="{{ student.key }}_7">G</label>
+                    </div>
+                    <div class="custom-control custom-radio custom-control-inline">
+                        <input type="radio" {% if student.attendance == "U" %} checked {% endif %} id="{{ student.key }}_5" name="{{ student.key }}" value="U" >
+                        <label value="U" for="{{ student.key }}_5">U</label>
+                    </div>
+                    <div class="custom-control custom-radio custom-control-inline">
+                        <input type="radio" {% if student.attendance == "A" %} checked {% endif %} id="{{ student.key }}_3" name="{{ student.key }}" value="A" >
+                        <label value="A" for="{{ student.key }}_3">A</label>
+                    </div>
+                    <div class="custom-control custom-radio custom-control-inline">
+                        <input type="radio" {% if student.attendance == "S" %} checked {% endif %} id="{{ student.key }}_4" name="{{ student.key }}" value="S" >
+                        <label value="S" for="{{ student.key }}_4">S</label>
+                    </div>
+                    <div class="custom-control custom-radio custom-control-inline">
+                        <input type="radio" {% if student.attendance == "R/U" %} checked {% endif %} id="{{ student.key }}_6" name="{{ student.key }}" value="RU" >
+                        <label value="RU" for="{{ student.key }}_6">R/U</label>
+                    </div>
+{#                    <div class="custom-control custom-radio custom-control-inline">#}
+{#                        <input type="radio" {% if student.attendance == "F" %} checked {% endif %} id="{{ student.key }}_7" name="{{ student.key }}" value="F" >#}
+{#                        <label value="F" for="{{ student.key }}_7">F</label>#}
+{#                    </div>#}
+                </div>
+            </div>
+        {% endfor %}
+    <div class="row my-3">
+            <div class="col">
+                <input class="btn btn-lg btn-outline-dark btn-block rounded-0"
+                           type="button"
+                           value="Salva"
+                           data-toggle="modal"
+                           data-target="#saveConfirmModal">
+            </div>
+{#            <div class="col">#}
+{#                <div class="d-flex justify-content-end">#}
+{##}
+{#                </div>#}
+{#            </div>#}
+        </div>
+    </form>
+<!-- Modal -->
+    <div class="modal fade" id="saveConfirmModal" tabindex="-1" role="dialog" aria-labelledby="saveConfirmModalLabel" aria-hidden="true">
+      <div class="modal-dialog" role="document">
+        <div class="modal-content">
+          <div class="modal-header">
+            <h5 class="modal-title" id="saveConfirmModalLabel">Conferma salvataggio</h5>
+            <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+              <span aria-hidden="true">&times;</span>
+            </button>
+          </div>
+          <div class="modal-body" id="modalBody">
+              <p>Vuoi salvare le modifiche fatte?</p>
+
+          </div>
+          <div class="modal-footer">
+            <button type="button" class="btn btn-outline-info mt-3" data-dismiss="modal">Modifica</button>
+            <button type="submit" class="btn btn btn-outline-dark ml-auto mt-3" form="formsetAttendances">Salva</button>
+          </div>
+        </div>
+      </div>
+    </div>
+
+
+    <style>
+        input[type='radio'] {
+            -webkit-appearance: none;
+            -moz-appearance: none;
+            appearance: none;
+            margin: 0;
+            width: 50px;
+            height: 50px;
+            border-radius: 50%;
+            display: grid;
+            place-content: center;
+            background-color: white;
+        }
+
+        input[value="R"] {
+            border: solid medium #f69e4e;
+            color:#f69e4e;
+            }
+
+        input[value="G"] {
+            border: solid medium #f69e4e;
+            color:#f69e4e;
+            }
+
+        input[value="P"] {
+            border: solid medium #00b8cf;
+            color:#00b8cf;
+        }
+
+        input[value="A"] {
+            border: solid medium #cc0000;
+            color:#cc0000;
+        }
+
+        input[value="S"] {
+            border: solid medium #cc0000;
+            color:#cc0000;
+        }
+
+        input[value="U"] {
+            border: solid medium #f69e4e;
+            color:#f69e4e;
+        }
+
+        input[value="RU"] {
+            border: solid medium #cc0000;
+            color:#cc0000;
+        }
+
+        input[value="F"] {
+            border: solid medium #292b2c;
+            color:#292b2c;
+            margin-left: -30px;
+        }
+
+        input[value="R"]:checked {
+            background-color: rgba(246, 158, 78, 100%);
+        }
+
+        input[value="G"]:checked {
+            background-color: rgba(246, 158, 78, 100%);
+        }
+
+        input[value="P"]:checked {
+            background-color: rgba(0, 184, 207, 100%);
+        }
+
+        input[value="A"]:checked {
+            background-color: #cc0000;
+        }
+
+        input[value="S"]:checked {
+            background-color: #cc0000;
+        }
+
+        input[value="U"]:checked {
+            background-color: #f69e4e;
+        }
+
+        input[value="RU"]:checked {
+            background-color: #cc0000;
+        }
+
+        input[value="F"]:checked {
+            background-color: #292b2c;
+        }
+
+        input[value="P"]:checked ~ label[value="P"] {
+            color: white;
+        }
+
+        input[value="R"]:checked ~ label[value="R"] {
+            color: white;
+        }
+
+        input[value="G"]:checked ~ label[value="G"] {
+            color: white;
+        }
+
+        input[value="A"]:checked ~ label[value="A"] {
+            color: white;
+        }
+
+        input[value="S"]:checked ~ label[value="S"] {
+            color: white;
+        }
+
+        input[value="U"]:checked ~ label[value="U"] {
+            color: white;
+        }
+
+        input[value="RU"]:checked ~ label[value="RU"] {
+            color: white;
+        }
+
+        input[value="F"]:checked ~ label[value="F"] {
+            color: white;
+        }
+
+        label {
+            position: relative;
+            top: 7px;
+            left: -32px;
+            font-size: 25px;
+            font-weight: 900;
+        }
+
+        label[value="P"]{
+            color:#00b8cf;
+        }
+
+        label[value="R"] {
+            color:#f69e4e;
+        }
+
+        label[value="G"] {
+            color:#f69e4e;
+        }
+
+        label[value="A"] {
+            color:#cc0000;
+        }
+
+        label[value="S"] {
+            color:#cc0000;
+        }
+
+        label[value="U"] {
+            color:#f69e4e;
+        }
+
+        label[value="RU"] {
+            left: -44px !important;
+            color:#cc0000;
+        }
+
+        label[value="F"] {
+            color:#292b2c;
+        }
+
+        .custom-control-inline{
+            margin-right: 0 !important;
+        }
+
+        .even_row{
+            background-color: #f7f7f7 ;
+        }
+    </style>
+
+{% endblock content %}

@@ -1,0 +1,14 @@
+{% extends 'base.html' %}
+{% load crispy_forms_tags %}
+
+{% block content %}
+
+<h5 class="my-3">Inserisci una nuova segnalazione</h5>
+<form method="POST" enctype="multipart/form-data" class="mb-5">
+    {% csrf_token %}
+{#    {{ form.student|as_crispy_field }}#}
+    {{ form|crispy }}
+    <button type="submit" class="btn btn btn-outline-dark ml-auto mt-3">Salva</button>
+</form>
+
+{% endblock content %}

@@ -1,0 +1,37 @@
+{% extends 'base.html' %}
+
+{% block content %}
+
+    {% if request.user.is_staff %}
+
+    {% endif %}
+
+    <div class="d-flex">
+        <div class="mr-auto p-2">
+            <h2>
+                Stage
+            </h2>
+        </div>
+        <div class="p-2"><form action="{% url 'stage-create' %}"> <button type="submit" class="btn btn-outline-dark"><i class="fas fa-plus"></i> Aggiungi</button></form></div>
+    </div>
+    <div class="table-responsive">
+        <table class="table table-bordered table-hover">
+            <tbody class="text-center">
+                {% for stage in list %}
+                    <tr>
+                      <th ><a href="{% url 'stage-detail' stage.pk%}">
+                          {{ stage.course }} dal {{ stage.start_date|date:'d F Y' }} al {{ stage.end_date|date:'d F Y' }}</a></th>
+                    </tr>
+                {% endfor %}
+            </tbody>
+        </table>
+    </div>
+
+
+
+{% endblock content %}
+
+
+
+
+<!--                        <img src="{{ sezione.logo_sezione.url }}" style="max-width:100%">-->

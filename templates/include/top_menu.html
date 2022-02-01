@@ -1,0 +1,59 @@
+<nav class="navbar navbar-expand-lg navbar-dark bg-dark">
+          <div class="container-fluid">
+          <button class="navbar-toggler py-3" type="button" data-toggle="collapse" data-target="#navbarUtente" aria-controls="navbarUtente" aria-expanded="false" aria-label="Toggle Utente">
+              <span class="text-white">PROFILO</span>
+          </button>
+              <div class="collapse navbar-collapse" id="navbarUtente">
+                  <ul class="navbar-nav ml-auto d-inline-flex">
+                  {% if user.is_authenticated %}
+                      <li class="nav-item">
+                          <h5>
+                              <a class="nav-link d-inline-flex my-3 text-white" href="">
+                                  Ciao,
+                                  <span class="ml-1 pr-2"><strong>{{ request.user.first_name }}</strong></span>
+                              </a>
+                          </h5>
+                      </li>
+                      <li class="nav-item">
+                          {% if user.is_superuser %}
+                              <a class="nav-link d-inline-flex mt-2 text-white p-0 mx-0" href="{% url 'admin:index' %}">
+                                  <span class="fa-stack fa-2x">
+                                      <span style="color: whitesmoke"> <i class="fas fa-circle fa-stack-2x"></i></span>
+                                      <span class="text-dark ml-2"><i class="fal fa-users-cog fa-stack-1x"></i></span>
+                                  </span>
+                              </a>
+                          {% endif %}
+                          <!--<a class="nav-link d-inline-flex mt-2 text-white p-0 mx-0" onclick="toggleNav()" href="#">
+                              <span class="fa-stack fa-2x">
+                                  <span style="color: whitesmoke"> <i class="fas fa-circle fa-stack-2x"></i></span>
+                                  <span class="text-info ml-2"><<i class="fal fa-ellipsis-h fa-stack-1x"></i></span>
+                              </span>
+                          </a>-->
+                          <a class="nav-link d-inline-flex mt-2 text-white p-0 mx-0" onclick="print_page()" href="#">
+                              <span class="fa-stack fa-2x">
+                                  <span style="color: whitesmoke"> <i class="fas fa-circle fa-stack-2x"></i></span>
+                                  <span style="color: #f69e4e" class="ml-2"><i class="fal fa-print fa-stack-1x"></i></span>
+                              </span>
+                          </a>
+                          <a class="nav-link d-inline-flex mt-2 mx-0 p-0 text-white" href="{% url 'logout' %}">
+                              <span class="fa-stack fa-2x">
+                                  <span style="color: whitesmoke"> <i class="fas fa-circle fa-stack-2x"></i></span>
+                                  <span style="color: tomato" class="ml-2"><i class="fal fa-power-off fa-stack-1x mr-2"></i></span>
+                              </span>
+                          </a>
+                      </li>
+                  {% else %}
+                      <li class="nav-item">
+                          <a class="nav-link d-inline-flex p-0 text-white" href="{% url 'social:begin' 'google-oauth2'%}">
+                              <span class="fa-stack fa-2x">
+                                  <span style="color: whitesmoke"> <i class="fas fa-circle fa-stack-2x"></i></span>
+                                  <span style="color: #f69e4e" class="ml-2"><i class="fal fa-sign-in fa-stack-1x mr-2"></i></span>
+                              </span>
+                          </a>
+                      </li>
+                  {% endif %}
+                  </ul>
+            </div>
+
+        </div>
+    </nav>

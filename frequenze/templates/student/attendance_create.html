@@ -1,0 +1,135 @@
+{% extends 'base.html' %}
+{% load crispy_forms_tags %}
+
+{% block content %}
+
+<div class="col-md-6">
+<div class="d-flex">
+    <div class="btn-group btn-group-lg my-3 mr-5" role="group">
+        <button onclick="window.location.href='{% url 'course-detail' course %}'"
+                type="submit"
+                class="btn btn-outline-info rounded-0">
+            < Torna al registro
+        </button>
+    </div>
+    <div class="btn-group btn-group-lg my-3" role="group">
+        <button onclick="window.location.href='{% url 'studentattendance-create' course date_nav.sub_week %}'"
+                type="submit"
+                class="btn btn-outline-dark rounded-0">
+            <i class="fal fa-caret-circle-left"></i>
+        </button>
+    </div>
+    <div class="btn-group btn-group-lg my-3" role="group">
+        <button onclick="window.location.href='{% url 'studentattendance-create' course date_nav.sub_day %}'"
+                type="submit"
+                class="btn btn-outline-dark rounded-0">
+            <i class="fal fa-caret-left"></i>
+        </button>
+    </div>
+    <div class="mt-4 mx-3"><h3> {{ date }}</h3></div>
+    <div class="btn-group btn-group-lg my-3" role="group">
+        <button onclick="window.location.href='{% url 'studentattendance-create' course date_nav.add_day %}'"
+                type="submit"
+                class="btn btn-outline-dark rounded-0">
+            <i class="fal fa-caret-right"></i>
+        </button>
+    </div>
+    <div class="btn-group btn-group-lg my-3" role="group">
+        <button onclick="window.location.href='{% url 'studentattendance-create' course date_nav.add_week %}'"
+                type="submit"
+                class="btn btn-outline-dark rounded-0">
+            <i class="fal fa-caret-circle-right"></i>
+        </button>
+    </div>
+</div>
+    <form id="formsetAttendances" method="post" action="">
+        {% csrf_token %}
+        {{ formset.management_form }}
+        <table class="table">
+            <thead>
+                <tr>
+                    <th hidden></th>
+                    <th scope="col">Studente</th>
+                    <th hidden scope="col">Data</th>
+                    <!--<th scope="col"></th>-->
+                    <!--<th scope="col">Ore perse</th>-->
+                    <th class="p-1" scope="col">
+                        <div class="d-flex">
+                            <input class="btn btn-outline-dark ml-auto" type="button" value="Salva" data-toggle="modal" data-target="#saveConfirmModal">
+                        </div>
+                    </th>
+                </tr>
+            </thead>
+             <tbody id="tableBody">
+                {% for form in formset %}
+                    <tr>
+                        <td hidden>{{ form.id }}</td>
+                        <td>{{ form.student }}</td>
+                        <td hidden>{{ form.attendance_date }}</td>
+                        <td>{{ form.event }}</td>
+                        <!--<td>{{ form.hours_lost }}</td>-->
+                    </tr>
+                {% endfor %}
+             </tbody>
+        <tfoot>
+            <tr>
+                <td class="p-1">
+
+                </td>
+                <td>
+                    <div class="d-flex">
+                        <input class="btn btn-outline-dark ml-auto" type="button" value="Salva" data-toggle="modal" data-target="#saveConfirmModal">
+                    </div>
+                </td>
+            </tr>
+        </tfoot>
+        </table>
+        {% for error in formset.errors %}
+            <h4 class="text-danger">{{ error }}</h4>
+        {% endfor %}
+    </form>
+</div>
+
+<!-- Modal -->
+    <div class="modal fade" id="saveConfirmModal" tabindex="-1" role="dialog" aria-labelledby="saveConfirmModalLabel" aria-hidden="true">
+      <div class="modal-dialog" role="document">
+        <div class="modal-content">
+          <div class="modal-header">
+            <h5 class="modal-title" id="saveConfirmModalLabel">Conferma salvataggio</h5>
+            <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+              <span aria-hidden="true">&times;</span>
+            </button>
+          </div>
+          <div class="modal-body" id="modalBody">
+              <p>Vuoi salvare le modifiche fatte?</p>
+
+          </div>
+          <div class="modal-footer">
+            <button type="button" class="btn btn-outline-info mt-3" data-dismiss="modal">Modifica</button>
+            <button type="submit" class="btn btn btn-outline-dark ml-auto mt-3" form="formsetAttendances">Salva</button>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <script>
+    function f() {
+        palla = document.getElementById('formsetAttendances');
+        var text = "";
+        var x;
+        for (x in palla) {
+            if (typeof (palla[x]) != 'undefined'){
+                text += palla[x] + " ";
+            }
+
+        }
+
+        document.getElementById('modalBody').textContent = text;
+    }
+
+
+    </script>
+
+
+{% endblock content %}
+

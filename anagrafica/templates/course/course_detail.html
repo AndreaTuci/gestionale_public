@@ -1,0 +1,217 @@
+{% extends 'base.html' %}
+{% block content %}
+{% load highcharts_tags %}
+
+
+<div class="container-fluid mt-3">
+    <div class="d-flex">
+        <div class="mr-auto"><h2>Registro di classe - <span class="text-orange"><strong>Corso {{ course }}</strong></span></h2></div>
+    </div>
+    <nav class="navbar navbar-expand-lg bg-transparent px-0">
+        <div class="container-fluid px-0">
+            <button class="navbar-toggler py-3 border border-dark rounded-0" type="button" data-toggle="collapse" data-target="#navbarUtility" aria-controls="navbarUtente" aria-expanded="false" aria-label="Toggle Utente">
+                <i class="fal fa-cogs pr-3"></i>Strumenti
+            </button>
+            <div class="collapse navbar-collapse" id="navbarUtility">
+                <ul class="navbar-nav mr-auto d-inline-flex">
+                    {% if user.profile.get_task_display in backoffice %}
+
+
+                        <li>
+                            <button onclick="window.location.href='{% url 'studentattendance-new-create' course.pk date %}'"
+                                    type="submit"
+                                    class="btn btn-lg btn-outline-dark rounded-0">
+                                <i class="fal fa-ballot-check pr-2"></i> Inserisci presenze
+                            </button>
+                        </li>
+
+
+                    <li>
+                        <button onclick="window.location.href='{% url 'studentattendance-course-list' course.pk month year %}'"
+                                type="submit"
+                                class="btn btn-lg btn-outline-dark rounded-0 border-left-0">
+                    {% else %}
+                        <li>
+                        <button onclick="window.location.href='{% url 'studentattendance-course-list' course.pk month year %}'"
+                                type="submit"
+                                class="btn btn-lg btn-outline-dark rounded-0">
+
+                    {% endif %}
+                            <i class="fal fa-clipboard-user"></i> Visualizza le assenze
+                        </button>
+                    </li>
+
+                    <li>
+                        <button onclick="window.location.href='{% url 'disciplinarymeasure-course-create' course.pk %}'"
+                                type="submit"
+                                class="btn btn-lg btn-outline-dark rounded-0 border-left-0">
+                            <i class="fal fa-exclamation"></i> Fai una segnalazione
+                        </button>
+                    </li>
+                    {% if user.profile.get_task_display in backoffice %}
+                    <li>
+                        <button onclick="window.location.href='{% url 'course-detail-inail' course.pk %}'"
+                                type="submit"
+                                class="btn btn-lg btn-outline-dark rounded-0 border-left-0">
+                            <i class="fal fa-list-alt"></i> Elenchi da stampare
+                        </button>
+                    </li>
+                    <li>
+                        <button onclick="window.location.href='{% url 'communication-course-create' course.pk %}'"
+                                type="submit"
+                                class="btn btn-lg btn-outline-dark rounded-0 border-left-0">
+                            <i class="fal fa-mail-bulk"></i> Manda una circolare
+                        </button>
+                    </li>
+                    {% endif %}
+                </ul>
+            </div>
+        </div>
+    </nav>
+
+    <div class="row justify-content-center">
+        <div class="table-responsive">
+        <table class="table table-bordered table-hover">
+            <thead class="text-center">
+                <tr>
+                    <th scope="col">
+                        <span class="d-print-none">
+                            <a href="{% url 'course-list' %}"> <i class="fal fa-chevron-circle-left"></i></a>
+                        </span>
+                    </th>
+                    {% if user.profile.get_task_display in backoffice %}
+                        <th scope="col">Posta</th>
+                    {% endif %}
+                    <th scope="col">Cognome</th>
+                    <th scope="col">Nome</th>
+                    {% if user.profile.get_task_display in backoffice %}
+                    <th scope="col">Tel.</th>
+                    <th scope="col">Rif. 1</th>
+                    <th scope="col">Rif. 2</th>
+                    {% endif %}
+                    <th scope="col">Ritardi</th>
+                    <th scope="col">Assenze</th>
+                    <th scope="col">Permessi</th>
+                    <th scope="col">Segnalazioni</th>
+                </tr>
+            </thead>
+            <tbody class="text-center">
+            {% for student in students %}
+                {% if student.is_withdrawn %}
+                    <tr style="background-color: #dddddd">
+                {% else %}
+                    <tr>
+
+                {% endif %}
+
+                    <td>{{ student.number }}</td>
+                    {% if user.profile.get_task_display in backoffice %}
+                        <td>
+                            <span class="d-print-none mr-2">
+                                <a href="{% url 'communication-student-list' student.pk %}"> <i class="fal fa-envelope"></i></a>
+                            </span>
+                        </td>
+                        <td>
+                            <a href="{% url 'student-detail' student.pk %}">{{ student.surname }}</a></td>
+                    {% else %}
+                        <td>{{ student.surname }}</td>
+                    {% endif %}
+                    <td>{{ student.name }}</td>
+                    {% if user.profile.get_task_display in backoffice %}
+                    <td>{% if student.telephone %}
+                            {{ student.telephone }}
+                        {% endif %}
+                    </td>
+                    <td>{% if student.parent_telephone_1 %}
+                            {% if student.parent_role_1 %}
+                                {{ student.parent_role_1 }}:
+                            {% else %}
+                                Madre:
+                            {% endif %}
+                            {{ student.parent_telephone_1 }}
+                        {% endif %}
+                    </td>
+                    <td>
+                        {% if student.parent_telephone_2 %}
+                            {% if student.parent_role_2 %}
+                                {{ student.parent_role_2 }}:
+                            {% else %}
+                                Padre:
+                            {% endif %}
+                            {{ student.parent_telephone_2 }}
+                        {% endif %}
+                    </td>
+                    {% endif %}
+                    <td>{{ student.delays }} {% if student.get_absences_number.4 %}(+{{ student.get_absences_number.4 }}G){% endif %}</td>
+                    <td>{{ student.get_absences_number.0 }}</td>
+                    <td>
+                        {% if student.postponed_entry %}
+                            {{ student.postponed_entry }} /
+                        {% endif %}
+                        {% if student.early_exit %}
+                            {{ student.early_exit }}
+                        {% endif %}
+                    </td>
+                    <td>
+                        {% if student.get_disciplinary_measures.all|length > 0 %}
+                            <a href="{% url 'disciplinarymeasure-list-by-student' student.pk %}"> {{ student.get_disciplinary_measures.all|length }}</a>
+                        {% else %}
+                            0
+                        {% endif %}
+                    </td>
+                </tr>
+            {% endfor %}
+            </tbody>
+        </table>
+        </div>
+    </div>
+
+        <div class="row mb-5 p-3 border">
+
+            <div class="col">
+
+                <div class="row justify-content-center my-3 pb-3 border-bottom">
+                {% if user.profile.get_task_display in backoffice %}
+
+                        {% if user.profile.get_task_display in backoffice %}
+                            <h3>Comunicazioni con le famiglie:
+                            <a href="{% url 'communication-update' course.pk communications.pk %}"><i style="font-size: large" class="fas fa-edit mr-2"></i></a>
+                            <a href="{% url 'communication-list' course.pk %}"><i style="font-size: large" class="fal fa-folder-open mr-2"></i></a>
+                            </h3>
+                        {% endif %}
+                </div>
+
+
+                    <div class="row">
+                    {% if communications %}
+                    <div class="col-xl">
+                        <form method="post">
+                            {% csrf_token %}
+                            <div class="form-group">
+                                <label for="exampleFormControlTextarea1"></label>
+                                <textarea class="form-control border-0 bg-white" disabled name='text' id="exampleFormControlTextarea1" rows="10">{{ communications.text }} </textarea>
+                            </div>
+                            <!--<button class="btn btn-outline-dark">Ok</button>-->
+                        </form>
+                    </div>
+                    {% endif %}
+                    {% endif %}
+                    <div class="col-xl">{% highcharts_js 1 0 0 0 %}<div id="bar"></div></div>
+                    </div>
+
+            </div>
+        </div>
+</div>
+
+<script>
+   $(function () {
+       $.getJSON("{% url 'attendances_bar_json' course.pk %}", function(data) {
+           $('#bar').highcharts(data);
+       });
+   })
+</script>
+
+{% endblock content %}
+
+
+

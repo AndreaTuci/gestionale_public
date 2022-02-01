@@ -1,0 +1,12 @@
+{% extends 'base.html' %}
+{% load crispy_forms_tags %}
+
+{% block content %}
+
+<form method="POST" enctype="multipart/form-data" class="mb-5">
+    {% csrf_token %}
+    <label class="h5 mt-3" for="employee">Impiegato: </label><input class="input-group" name="employee" id="employee">
+    <button type="submit" class="btn btn btn-outline-dark ml-auto mt-3">Salva</button>
+</form>
+
+{% endblock content %}

@@ -1,0 +1,48 @@
+{% extends 'base.html' %}
+
+{% block content %}
+
+    {% if request.user.is_staff %}
+
+    {% endif %}
+    <div class="mr-auto p-2"><h2>Unità formative</h2></div>
+    <div class="d-flex my-2">
+        <button onclick="window.location.href='{% url 'trainingunit-create' %}'"
+                type="submit"
+                class="btn btn-lg btn-outline-dark rounded-0">
+            <i class="fas fa-plus"></i> Nuova UF
+        </button>
+    </div>
+
+    <table class="table table-bordered table-hover">
+        <thead class="text-center">
+            <tr>
+              <th scope="col">Unità</th>
+              <th scope="col">Docente</th>
+              <th scope="col">Ore rimanenti</th>
+            </tr>
+        </thead>
+        <tbody class="text-center">
+        {% for unit in list %}
+            {% ifchanged %}
+                <tr>
+                    <td colspan="3" class="text-left pl-5 bg-light">
+                        <h4><strong>{{ unit.course }}</strong></h4>
+                    </td>
+                </tr>
+            {% endifchanged %}
+            <tr>
+              <th scope="row"><a href="{% url 'trainingunit-detail' unit.pk %}">UF{{ unit.code }}: {{ unit.name }}</a></th>
+              <td>{{ unit.teacher }}</td>
+              <td>{{ unit.hours_remaining }}/{{ unit.hours_expected }}</td>
+            </tr>
+    {% endfor %}
+        </tbody>
+    </table>
+
+
+
+{% endblock content %}
+
+
+

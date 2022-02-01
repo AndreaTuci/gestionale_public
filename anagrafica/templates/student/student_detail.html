@@ -1,0 +1,124 @@
+{% extends 'base.html' %}
+{% block content %}
+        <div class="container-fluid mt-3">
+            <div class="d-flex border-bottom mb-3">
+                <div class="mr-auto py-2"><h2>{{student.name}} {{student.surname}}{% if student.handicap %}*{% endif %} [{{ student.number }}] - Iscritto al corso {{ student.course }}</h2></div>
+
+                <nav class="navbar navbar-expand-lg bg-transparent px-0 d-print-none">
+                    <div class="container-fluid px-0">
+                        <button class="navbar-toggler py-3 border border-dark rounded-0" type="button" data-toggle="collapse" data-target="#navbarUtility" aria-controls="navbarUtente" aria-expanded="false" aria-label="Toggle Utente">
+                            <i class="fal fa-cogs pr-3"></i>Strumenti
+                        </button>
+                        <div class="collapse navbar-collapse" id="navbarUtility">
+                            <ul class="navbar-nav mr-auto d-inline-flex">
+                                <li>
+                                    <button onclick="window.location.href='{% url 'course-detail' student.course.pk %}'"
+                                            type="submit"
+                                            class="btn btn-lg btn-outline-info rounded-0">
+                                        < Torna al registro
+                                    </button>
+
+                                </li>
+                                <li>
+                                    <button onclick="window.location.href='{% url 'student-update' student.pk %}'"
+                                            type="submit"
+                                            class="btn btn-lg btn-outline-dark rounded-0 border-left-0">
+                                        <i class="fal fa-pen"></i> Modifica
+                                    </button>
+
+                                </li>
+                                <li>
+                                    <button onclick="window.location.href='{% url 'student-delete' student.pk %}'"
+                                            type="submit"
+                                            class="btn btn-lg btn-outline-dark rounded-0 border-left-0">
+                                        <i class="fal fa-trash"></i> Cancella
+                                    </button>
+                                </li>
+                            </ul>
+                        </div>
+                    </div>
+                </nav>
+            </div>
+            <div class="row">
+
+                <div class="col">
+                    <h4>Riferimenti:</h4>
+                    <p>Data di nascita: {{student.date_of_birth}}</p>
+                    <p>Residente in {{student.resident_in_city}}, {{student.resident_in_address}} - {{student.postal_code}}</p>
+                    <p><a href="{{ companies }}" target="_blank">Visualizza ditte in zona</a></p>
+                    <h4>Contatti:</h4>
+                    <p>Tel.: {% if student.telephone %}{{ student.telephone }}</p>{% endif %}
+                    <p>Email: {% if student.email %}{{ student.email }}</p>{% endif %}
+                    <p>Tel.
+                        {% if student.parent_role_1 %}
+                            {{ student.parent_role_1 }}
+                        {% else %}
+                            madre:
+                        {% endif %} {% if student.parent_telephone_1 %}{{ student.parent_telephone_1 }}{% endif %}
+                    </p>
+                    <p>Tel.
+                        {% if student.parent_role_2 %}
+                            {{ student.parent_role_2 }}
+                        {% else %}
+                            padre:
+                        {% endif %}{% if student.parent_telephone_2 %}{{ student.parent_telephone_2 }}{% endif %}
+                    </p>
+                    <p>Email famiglia:
+                        {% if student.parent_email_1 %}{{ student.parent_email_1 }} {% endif %}
+                        {% if student.parent_email_2 %}{{ student.parent_email_2 }} {% endif %}</p>
+                    <p>Codice fiscale:
+                        {% if student.fiscal_code %}
+                            {{student.fiscal_code}}
+                        {% else %}
+                            <span class="text-danger">[Codice mancante]</span>
+                        {% endif %}
+                    </p>
+                </div>
+                <div class="col">
+                    {% if student.photo %}
+                        <img class="card-img-top my-2 ml-2 p-0 crop" style="border-radius: 50%; height: 200px; width: 200px" src="{{ student.photo.url }}" alt="Profile image">
+                    {% endif %}
+                    {% if student.notes %}
+                        <h4>Note:</h4>
+                        <p>{{ student.notes }}</p>
+                    {% endif %}
+                </div>
+            </div>
+            <div class="row">
+                <div class="col">
+                    <h4>Situazione scolastica:</h4>
+                    <p>Iscritto il
+                        {% if student.registration_date %}
+                            {{ student.registration_date }}
+                        {% else %}
+                            <span class="text-danger">[Data non inserita]</span>
+                        {% endif %}
+                    </p>
+                    <p>Permessi: {% if student.postponed_entry %} {{ student.postponed_entry }}{% endif %} {% if student.early_exit %} {{ student.early_exit }}{% endif %}
+                    {%  if not student.postponed_entry and not student.early_exit%} No{% endif %}</p>
+                    <p>Ritardi: {{ student.delays }}</p>
+                    {% if student.withdrawal_date %}<p class="text-danger">Ritirato il {{ student.withdrawal_date }} - Causa: {{ student.withdrawal_cause }}</p>{% endif %}
+                    {% if student.qualification_date %}<p class="text-info">Qualifica conseguita il {{ student.qualification_date }} con votazione {{ student.grade }}</p>{% endif %}
+                </div>
+                <div class="col">
+
+                </div>
+            </div>
+            <div class="row border-top my-3">{% if student.handicap %}<div class="col">* Studente portatore di handicap</div>{% endif %}</div>
+            {% if student.get_disciplinary_measures %}
+            <div class="row">
+                <div class="col">
+                    <h4 class="my-4">Provvedimenti disciplinari</h4>
+                    {% for measure in student.get_disciplinary_measures %}
+                        <h5>{{ measure.note_type }} - {{ measure.reporting_date }}</h5>
+                        <p>Insegnante: {{ measure.teacher_reporting }}, Tutor: {{ measure.tutor_reporting }}</p>
+                        <p>Studenti coinvolti: {% for student in measure.students.all %} {{ student }} | {% endfor %}</p>
+                        <p>{{ measure.motivation }}</p>
+                        <br>
+                    {% endfor %}
+                </div>
+            </div>
+            {% endif %}
+        </div>
+
+{% endblock content %}

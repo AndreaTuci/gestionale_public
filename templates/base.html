@@ -1,0 +1,85 @@
+{% load static %}
+{% load cloudinary %}
+
+<!doctype html>
+<html lang="it">
+  <head>
+    <!-- Required meta tags -->
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+    <meta name="google-site-verification" content="kzb4fnnGJu7qFpjaHinEBk4GSIXQSmVX23EoUQ4kUBM" />
+    <!-- Bootstrap CSS jQuery Popper-->
+    <script src="{% static 'js/jquery-3.5.1.min.js' %}"></script>
+    <script src="{% static 'js/bootstrap.bundle.min.js' %}"></script>
+    <link rel="stylesheet" href="{% static "bootstrap-4/css/bootstrap.min.css"%}" >
+    <link href="{% static "fontawesome/css/all.css" %}" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css?family=Inconsolata&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="{% static 'css/cfp.css' %}">
+
+    <!-- Htmx script -->
+    <script src="{% static 'js/htmx.min.js' %}"></script>
+
+
+
+    <title>{% block head_title %}CFP Don Giulio Facibeni{% endblock head_title %}</title>
+    <link rel="shortcut icon" type="image/png" href="{% static 'images/favicon.ico' %}"/>
+  </head>
+
+  <body>
+    {% include 'include/header.html' %}
+
+    {% include 'include/top_menu.html' %}
+
+    {% include 'include/sidebar.html' %}
+
+{#    <div class="divFooter ml-5"><img style="width: 90%" src="{% static "images/footer_carta_intestata.png" %}" alt=""></div>#}
+
+
+    <!-- Page content -->
+    <div id = 'main' class="content">
+
+      {% block content %}
+
+
+      {% endblock content %}
+    </div>
+
+
+    {% if is_paginated %}
+        {% include 'include/pagination.html' %}
+    {% endif %}
+
+    <!-- Htmx forms script -->
+    <script>
+      document.body.addEventListener('htmx:configRequest', (event) => {
+        event.detail.headers['X-CSRFToken'] = '{{ csrf_token }}';
+      })
+    </script>
+
+  </body>
+</html>
+
+
+<!-- Sidebar script -->
+<script>
+
+function toggleNav() {
+  if (document.getElementById("sidebar").style.width === '0px'){
+      document.getElementById("sidebar").style.width = '300px';
+      document.getElementById("main").style.marginLeft = '300px';
+  } else {
+      document.getElementById("sidebar").style.width = '0px';
+      document.getElementById("main").style.marginLeft = '0px';
+  }
+}
+
+function print_page() {
+    document.getElementById("sidebar").style.width = '0px';
+    document.getElementById("main").style.marginLeft = '0px';
+    window.print()
+    document.getElementById("sidebar").style.width = '300px';
+    document.getElementById("main").style.marginLeft = '300px';
+}
+
+$(".nav-item a").on("click", function() { $(".nav-item a").removeClass("active"); $(this).addClass("active"); });
+</script>

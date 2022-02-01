@@ -1,0 +1,29 @@
+{% extends 'base.html' %}
+{% block content %}
+<div class="container-fluid mt-3">
+    <h4>Devi essere amministratore per usare questa pagina</h4>
+    <form action="{% url 'companies-add'%}"
+        method="post"
+        enctype="multipart/form-data"
+        class="dropzone d-print-none"
+        id="dropzone">
+
+    {% csrf_token %}
+
+     <div class="form-row m-3">
+         <div class="input-group mb-3">
+             <div class="input-group-prepend">
+                 <span class="input-group-text" id="basic-addon1">1 - Elettricista, 2 - Idraulico</span>
+             </div>
+             <input type="text" name="sector" class="form-control" placeholder="1 o 2" aria-label="Settore" aria-describedby="basic-addon1">
+        </div>
+         <div class="custom-file">
+             <input class="custom-file-input col-5" name="file" type="file" id="validatedCustomFile" required/>
+             <label class="custom-file-label col-5" for="validatedCustomFile" data-browse="Cerca">Scegli un file excel...</label>
+            <input class="btn btn-primary  ml-auto" type="submit"/>
+         </div>
+     </div>
+  </form>
+<p>{{ copy_error }}</p>
+</div>
+{% endblock content %}

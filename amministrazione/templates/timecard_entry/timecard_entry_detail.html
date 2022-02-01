@@ -1,0 +1,21 @@
+{% extends 'base.html' %}
+
+{% block content %}
+<h2 class="mt-3">Time card di {{ employee }}</h2>
+    <div class="d-flex">
+        <div class="my-3"><h4>Mese di {{ course_name }}
+            <a class="d-print-none" href="{% url 'timecard-detail' pk date_nav.prev_month date_nav.prev_year %}"><i class="fal fa-chevron-circle-left"></i></a>
+            {{ month_name|upper }}
+            <a class="d-print-none" href="{% url 'timecard-detail' pk date_nav.next_month date_nav.next_year %}"><i class="fal fa-chevron-circle-right"></i></a>
+        </h4></div>
+    </div>
+    <h4 class="mb-4"><i class="fal fa-file-excel text-success mx-3"></i><a href="{% url 'timecard-download' employee.pk month year %}">Scarica Excel</a>{% if user.is_superuser %} |<i class="fal fa-cloud-download text-info mx-3"></i><a href="{% url 'timecard-download-all' month year %}">Scarica tutte le timecard</a>{% endif %}</h4>
+{% for entry in timecard %}
+    {% ifchanged %}
+        <hr>
+        <h5 class="pl-2">{{ entry.entry_date }}</h5>
+        <hr>
+    {% endifchanged %}
+    <span class="mx-2 text-dark">{{ entry.get_in_out_display }} {{ entry.entry_time }}</span>
+{% endfor %}
+{% endblock content %}

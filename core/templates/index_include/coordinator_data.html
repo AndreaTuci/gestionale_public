@@ -1,0 +1,22 @@
+{% load highcharts_tags %}
+
+<div class="col">
+    <div class="row mt-4 border-bottom">
+        <div class="col">
+            <h4><strong>Andamento delle frequenze</strong></h4>
+        </div>
+    </div>
+    <div class="row mt-3">
+        <div class="col">
+            {% highcharts_js 1 0 0 0 %}
+    <div id="general-attendances-bar"></div>
+        </div>
+    </div>
+</div>
+<script>
+   $(function () {
+       $.getJSON("{% url 'general-attendances_bar_json' %}", function(data) {
+           $('#general-attendances-bar').highcharts(data);
+       });
+   })
+</script>

@@ -1,0 +1,22 @@
+<tbody class="text-center"
+       hx-confirm="Sicuro di voler eliminare il contratto?"
+       hx-target="this"
+       hx-swap="outerHTML swap:500ms">
+    {% for agreement in list %}
+        <tr>
+            <td>
+                <a href='#'
+                   class="mx-2 text-danger"
+                   hx-delete="{% url 'teacher-agreement-delete' agreement.pk %}">
+                    <i class="fal fa-trash-alt"></i></a>
+            </td>
+            <td>
+                <a href="{% url 'teacher-agreement-detail' agreement.pk %}"><i class="fal fa-file-user"></i></a>
+            </td>
+            <td>{{ agreement.date}}</td>
+            <td>{{ agreement.employee }}</td>
+            <td>{{ agreement.training_unit }}</td>
+            <td>€ {{ agreement.wage|floatformat:2 }}</td>
+        </tr>
+    {% endfor %}
+</tbody>

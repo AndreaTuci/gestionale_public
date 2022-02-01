@@ -1,0 +1,11 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project version="4">
+  <component name="dataSourceStorageLocal" created-in="PY-213.6777.50">
+    <data-source name="Django default" uuid="f4f99617-77d2-4273-b397-119bc715c2a0">
+      <database-info product="" version="" jdbc-version="" driver-name="" driver-version="" dbms="GREENPLUM" exact-version="0" />
+      <auth-provider>pgpass</auth-provider>
+      <user-name>admin</user-name>
+      <schema-mapping />
+    </data-source>
+  </component>
+</project>

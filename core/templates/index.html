@@ -1,0 +1,91 @@
+{% extends 'base.html' %}
+{% load static %}
+{% load cloudinary %}
+{% load highcharts_tags %}
+
+{% block content %}
+    {% if user.is_authenticated %}
+
+        {% if message %}
+            <div class="row">
+                <div class="col">
+                    <div class="alert-info">{{ message }}</div>
+                </div>
+            </div>
+        {% endif %}
+        <div class="row">
+            <div class="col-xl-3">
+                {% include 'index_include/profile_card.html' %}
+            </div>
+            {% if user_data.active %}
+                {% if user_data.role == 'Tutor' %}
+                    {% include 'index_include/tutor_modal.html' %}
+                    {% include 'index_include/tutor_data.html' %}
+                {% endif %}
+                {% if user_data.role == 'Segreteria' %}
+                    {% include 'index_include/secretary_data.html' %}
+                {% endif %}
+                {% if user_data.role == 'Coordinamento' %}
+                    {% include 'index_include/coordinator_data.html' %}
+                {% endif %}
+            {% else %}
+                <div class="col-xl">
+                    <div class="container mt-4">
+                        <div class="alert alert-danger" role="alert">
+                            <h4><strong>Il tuo account è in attesa di approvazione</strong></h4>
+                            <p class="pt-2"><strong>La registrazione è andata a buon fine è stata inviata una mail all'amministratore!</strong></p>
+                            <p>Potrai utilizzare il tuo account una volta attivato dall'amministratore di sistema.</p>
+                        </div>
+                    </div>
+                </div>
+            {% endif %}
+        </div>
+        {% if user_data.role in backoffice %}
+            <div class="row">
+                <div class="col">
+
+                </div>
+            </div>
+        {% endif %}
+    {% else %}
+        <div class="container mt-5">
+            <div class="row">
+                <div class="col-1">
+                    <span style="color: #f69e4e"><i class="fad fa-sign-in fa-5x"></i></span>
+                </div>
+                <div class="col text-info mt-3 ml-2">
+                    <h2>
+                        <span style="color: #00b8cf">
+                            Esegui l'accesso per iniziare
+                        </span>
+                    </h2>
+                </div>
+            </div>
+            <div class="row mt-2">
+                <div class="col-5">
+
+                </div>
+                <div class="col ml-2">
+                    <a class="btn btn-outline-dark btn-lg" href="{% url 'social:begin' 'google-oauth2' %}">
+                        Login
+                    </a>
+                </div>
+            </div>
+        </div>
+    {% endif %}
+    <script>
+        focusMethod = function getFocus() {
+            setTimeout(function(){
+                document.getElementById("employee").focus();
+                },500)
+        }
+    </script>
+    {% if user_data.tutor_data.reminders %}
+        <script>
+            $(window).on('load', function() {
+                $('#remindersModal').modal('show');
+            });
+        </script>
+    {% endif %}
+
+{% endblock content %}

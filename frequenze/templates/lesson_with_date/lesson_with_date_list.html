@@ -1,0 +1,60 @@
+{% extends 'base.html' %}
+
+{% block content %}
+    {%  if 'frequenze.add_lessonwithdate' in request.user.get_all_permissions %}
+<div class="container-fluid mx-0 px-0">
+    <button type="submit"
+            style="height: 50px"
+            class="btn btn-outline-warning ml-auto mt-3 rounded-0"
+            onclick="window.location.href='{% url 'copy-schedule' %}'">
+        <span class="fa-stack"><i class="fal fa-copy fa-stack-2x mr-2"></i></span> Copia l'orario
+    </button>
+    <button type="submit"
+            style="height: 50px"
+            class="btn btn-outline-info ml-auto mt-3 rounded-0"
+            onclick="window.location.href='{% url 'new-general-schedule' ref_date %}'">
+        <span class="fa-stack">
+            <i class="fal fa-file fa-stack-2x"></i>
+            <i class="fal fa-hand-point-down fa-stack-1x"></i>
+        </span> Stampa questa settimana
+{#        <i class="fal fa-print mr-2"></i> Stampa questa settimana <i class="fal fa-hand-point-down mx-1"></i>#}
+    </button>
+    <button type="submit"
+            style="height: 50px"
+            class="btn btn-outline-info ml-auto mt-3 rounded-0"
+            onclick="window.location.href='{% url 'new-general-schedule' next_week %}'">
+        <span class="fa-stack">
+            <i class="fal fa-file fa-stack-2x"></i>
+            <i class="fal fa-hand-point-right fa-stack-1x"></i>
+        </span> Stampa la prossima settimana
+{#        <i class="fal fa-print mr-2"></i> Stampa la prossima settimana <i class="fal fa-hand-point-right mx-1"></i>#}
+    </button>
+    <button type="submit"
+            style="height: 50px"
+            class="btn btn-outline-dark ml-auto mt-3 rounded-0"
+            onclick="window.location.href='{% url 'new-send-schedule-all' ref_date %}'">
+        <span class="fa-stack">
+            <i class="fal fa-tablet-android fa-stack-2x"></i>
+            <i class="fal fa-hand-point-down fa-stack-1x"></i>
+        </span> Invia questa settimana
+{#        <i class="fal fa-mobile mr-2"></i>Invia questa settimana <i class="fal fa-hand-point-down mx-1"></i>#}
+    </button>
+    <button type="submit"
+            style="height: 50px"
+            class="btn btn-outline-dark ml-auto mt-3 rounded-0"
+            onclick="window.location.href='{% url 'new-send-schedule-all' next_week %}'">
+        <span class="fa-stack ">
+            <i class="fal fa-tablet-android fa-stack-2x"></i>
+            <i class="fal fa-hand-point-right fa-stack-1x"></i>
+        </span> Invia la prossima settimana
+{#        <i class="fal fa-mobile mr-2"></i>Invia la prossima settimana <i class="fal fa-hand-point-right mx-1"></i>#}
+    </button>
+    {% if message %}
+        <div class="alert alert-success rounded-0 mt-3 pt-3" role="alert">
+            <h5><i class="fal fa-check mr-3"></i>{{ message }}</h5>
+        </div>
+    {% endif %}
+</div>{% endif %}
+{% include 'lesson_with_date/lesson_with_date_schedule.html'%}
+
+{% endblock content %}

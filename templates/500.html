@@ -1,0 +1,33 @@
+{% extends 'base.html' %}
+
+{% block content %}
+    <div class="row mt-5 text-info">
+        <div class="col-3 text-center">
+            <span class="fa-stack fa-4x text-danger">
+                <i class="fad fa-server fa-stack-1x text-info"></i>
+                <i class="fas fa-ban fa-stack-2x"></i>
+            </span>
+        </div>
+        <div class="col">
+            <h1>Server error!</h1>
+            <p>{% if exception %}{{ exception }}{% endif %}</p>
+            <form method="post" enctype="multipart/form-data">
+                {% csrf_token %}
+                <button class="btn btn-outline-info" type="submit">
+                    <span class="fa-stack fa-2x">
+                        <i class="fad fa-bug fa-stack-1x"></i>
+                    </span>
+                    <span style="font-size: x-large" class="pr-4">Invia una mail per segnalare il bug</span>
+                </button>
+            </form>
+        </div>
+    </div>
+    <div class="row text-info">
+        <div class="col-3 text-center">
+            <h1 class="">#500</h1>
+        </div>
+        <div class="col">
+
+        </div>
+    </div>
+{% endblock content %}

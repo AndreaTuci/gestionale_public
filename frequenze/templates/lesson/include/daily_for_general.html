@@ -1,0 +1,43 @@
+<div class="col-2 border-right">
+    <div style="height: 50px" class="row">
+        <div class="col pt-3">
+            {{ selected_day|upper }}
+        </div>
+    </div>
+    {% for hour, lesson in lessons %}
+        {% if lesson != '' %}
+            <div>
+            {% if lesson.training_unit.kind == 'U' %}
+                <div style="height: 50px" class="row bg-cyan border-top">
+            {% elif lesson.training_unit.kind == 'T' %}
+                <div style="height: 50px" class="row bg-orange text-white border-top">
+            {% elif lesson.training_unit.kind == 'L' %}
+                <div style="height: 50px" class="row bg-dark text-white border-top">
+            {% else %}
+                <div style="height: 50px" class="row border-top">
+            {% endif %}
+        <div class="col pt-3">
+            {% ifchanged %}
+                <strong style="font-size: smaller; margin-left: -2em">{{ lesson.training_unit.name|truncatewords:2 }}</strong>
+            {% else %}
+                {% for agreement in lesson.trainingunit.related_unit.filter %}{{ agreement.employee }}{% endfor %}
+                {% ifchanged %}
+                    &nbsp;
+                    <!--<p class="text-danger">{{ lesson.training_unit.related_unit.filter }}</p>-->
+                {% else %}
+
+                {% endifchanged %}
+            {% endifchanged %}
+        </div>
+        </div>
+        </div>
+        {% else %}
+            <div style="height: 50px" class="row border-top">
+                <div class="col pt-3" onclick="getElementById('form_day').value = '{{ selected_day }}';getElementById('form_hour').value = '{{ forloop.counter }}'">
+
+                </div>
+            </div>
+        {% endif %}
+    {% endfor %}
+    </div>
+

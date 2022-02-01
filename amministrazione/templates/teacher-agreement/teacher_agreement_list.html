@@ -1,0 +1,36 @@
+{% extends 'base.html' %}
+
+{% block content %}
+
+    <div class="d-flex">
+        <div class="mr-auto mt-3"><h2>Contratti docenti</h2></div>
+        <div class="p-2">
+            <form action="{% url 'teacher-agreement-create' %}">
+                <button type="submit" class="btn btn-outline-dark"><i class="fas fa-plus"></i> Aggiungi</button>
+            </form>
+        </div>
+
+    </div>
+    <div class="table-responsive">
+        <table class="table table-bordered table-hover">
+            <thead class="text-center">
+                <tr>
+                    <th scope="col">Elimina</th>
+                    <th scope="col">Apri</th>
+                    <th scope="col">Data</th>
+                    <th scope="col">Docente</th>
+                    <th scope="col">Unità formativa</th>
+                    <th scope="col">Compenso</th>
+                </tr>
+            </thead>
+
+                {% include 'teacher-agreement/include/display_teacher_agreement_list.html' %}
+
+        </table>
+    </div>
+
+
+{% endblock content %}
+
+
+

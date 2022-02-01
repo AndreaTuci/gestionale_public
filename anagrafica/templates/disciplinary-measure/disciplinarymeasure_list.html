@@ -1,0 +1,44 @@
+{% extends 'base.html' %}
+
+{% block content %}
+
+    {% if request.user.is_staff %}
+
+    {% endif %}
+
+
+    <div class="mr-auto mt-3 p-2">
+        <h2>
+            <span class="d-print-none">
+                <a href="{% url 'course-detail' student.course.pk %}"> <i class="fal fa-chevron-circle-left"></i></a>
+            </span>
+            Segnalazioni di <span class="text-orange"><strong>{{ student }} [{{ student.course }}]</strong></span>
+        </h2>
+    </div>
+    <div class="table-responsive">
+        <table class="table table-bordered table-hover">
+            <thead class="text-center">
+                <tr>
+                  <th scope="col">Tipo e data</th>
+                  <th scope="col">Insegnante e tutor</th>
+                  <th scope="col">Motivazione</th>
+                </tr>
+            </thead>
+            <tbody class="text-center">
+                {% for measure in list %}
+                    <tr>
+                        <td><a href="{% url 'disciplinarymeasure-detail' measure.pk %}">{{ measure.note_type }} del {{ measure.reporting_date }}</a></td>
+                      <td>{{ measure.teacher_reporting }} - {{ measure.tutor_reporting }}</td>
+                      <td>{{ measure.motivation|truncatechars:50 }}</td>
+                    </tr>
+                {% endfor %}
+            </tbody>
+        </table>
+    </div>
+
+
+
+{% endblock content %}
+
+
+

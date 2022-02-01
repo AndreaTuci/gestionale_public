@@ -1,0 +1,64 @@
+{% extends 'base.html' %}
+{% load crispy_forms_tags %}
+{% load static %}
+{% block content %}
+
+    <h4 class="mx-3 my-5 text-info"><strong>Carica gruppi di studenti utilizzando un file .csv</strong></h4>
+ <form action="{% url 'student-list-upload'%}"
+       method="post"
+       enctype="multipart/form-data"
+       class="dropzone d-print-none"
+       id="dropzone">
+    {% csrf_token %}
+     <div class="form-row m-3">
+         <div class="custom-file">
+             <input class="custom-file-input col-5" name="file" type="file" id="validatedCustomFile" required/>
+             <label class="custom-file-label col-5" for="validatedCustomFile" data-browse="Cerca">Carica una lista e poi premi Invia</label>
+             <input class="btn btn-info ml-auto" type="submit"/>
+         </div>
+     </div>
+
+ </form>
+<div class="mx-3 mt-5"> <h5>Scarica da qui il <strong><a href="{% static 'files/collettivo.csv' %}">modello</a></strong></h5>
+<h5 class="text-danger">Attenzione: non utilizzare caratteri speciali o lettere accentate</h5></div>
+{% if error %}
+    <h4 class="text-danger m-3">{{ error }}</h4>
+{% endif %}
+
+  {% if content %}
+
+        {% if content.error_title %}
+            <div class="container">
+            <div class="row pt-3">
+                <div class="col-2 text-center"><h3><i class="fas fa-exclamation-triangle px-3 text-danger"></i></h3></div>
+                <div class="col-8 text-center"><h3 class="text-danger">{{content.error_title}}</h3></div>
+                <div class="col-2 text-center"><h3><i class="fas fa-exclamation-triangle px-3 text-danger"></i></h3></div>
+            </div>
+            <div class="row">
+                <div class="col">
+                    <p class="text-center">{{content.error_text}}</p>
+                    <h5 class="text-center text-info"><strong>{{content.error_solution}}</strong></h5>
+                </div>
+            </div>
+            </div>
+
+        {% else %}
+
+            <h3 class="m-3 text-danger">Operazione completata!</h3>
+
+
+        {% endif %}
+
+
+
+  {% endif %}
+<script>
+            $('#validatedCustomFile').on('change',function(){
+                //get the file name
+                var fileName = $(this).val();
+                //replace the "Choose a file" label
+                $(this).next('.custom-file-label').html(fileName);
+            })
+        </script>
+
+{% endblock content %}

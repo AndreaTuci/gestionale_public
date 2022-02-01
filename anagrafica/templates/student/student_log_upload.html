@@ -1,0 +1,91 @@
+{% extends 'base.html' %}
+{% load crispy_forms_tags %}
+{% block content %}
+
+ <form action="{% url 'student-log-upload'%}"
+        method="post"
+        enctype="multipart/form-data"
+        class="dropzone d-print-none"
+        id="dropzone">
+
+    {% csrf_token %}
+
+     <div class="form-row m-3">
+         <div class="custom-file">
+             <input class="custom-file-input col-5" name="file" type="file" id="validatedCustomFile" required/>
+             <label class="custom-file-label col-5" for="validatedCustomFile" data-browse="Cerca">Scegli un file di log...</label>
+            <input class="btn btn-primary  ml-auto" type="submit"/>
+         </div>
+     </div>
+    <div class="fallback">
+
+    </div>
+  </form>
+{% if error %}
+    <h4 class="text-danger m-3">{{ error }}</h4>
+{% endif %}
+
+
+  {% if content %}
+
+        {% if content.error_title %}
+            <div class="container">
+            <div class="row pt-3">
+                <div class="col-2 text-center"><h3><i class="fas fa-exclamation-triangle px-3 text-danger"></i></h3></div>
+                <div class="col-8 text-center"><h3 class="text-danger">{{content.error_title}}</h3></div>
+                <div class="col-2 text-center"><h3><i class="fas fa-exclamation-triangle px-3 text-danger"></i></h3></div>
+            </div>
+            <div class="row">
+                <div class="col">
+                    <p class="text-center">{{content.error_text}}</p>
+                    <h5 class="text-center text-info"><strong>{{content.error_solution}}</strong></h5>
+                </div>
+            </div>
+            </div>
+        {% else %}
+
+        {% for user_connected, record in content.items %}
+            <div class="row px-4 pb-5">
+            <div class="col mt-4">
+            <h4 class="border-bottom bg-light mb-2">{{user_connected}}</h4>
+            {% for meeting, details in record.items %}
+                <div class="row pt-1">
+                {% if details.elapsed_time >= 300 %}
+                    <div class="col py-1">
+                        <span class="text-muted">{{details.date|date:"D j b" }} |</span> Lezione <strong>{{meeting}} </strong> - Connesso per <strong> {{details.elapsed_time}} secondi </strong>| Uscito alle {{details.time}}
+                    </div>
+                            {% if details.too_much %}
+                                <div class="col py-1">
+                                    <i class="fas fa-exclamation-triangle px-3 text-warning"></i> Tempo da controllare
+                                </div>
+
+                            {% else %}
+                                <div class="col py-1"></div>
+                            {% endif %}
+
+
+                {% endif %}
+                </div>
+            {% endfor %}
+
+
+            </div>
+            </div>
+        {% endfor %}
+
+
+        {% endif %}
+
+
+
+  {% endif %}
+<script>
+            $('#validatedCustomFile').on('change',function(){
+                //get the file name
+                var fileName = $(this).val();
+                //replace the "Choose a file" label
+                $(this).next('.custom-file-label').html(fileName);
+            })
+        </script>
+
+{% endblock content %}

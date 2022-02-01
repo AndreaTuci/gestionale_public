@@ -1,0 +1,50 @@
+{% extends 'base.html' %}
+
+{% block content %}
+
+    {% if request.user.is_staff %}
+
+    {% endif %}
+
+    <div class="d-flex">
+        <div class="mr-auto p-2"><h2>Ditte</h2></div>
+        <div class="p-2"><form action="{% url 'company-create' %}"> <button type="submit" class="btn btn-outline-dark"><i class="fas fa-plus"></i> Aggiungi</button></form></div>
+    </div>
+    <div class="table-responsive">
+        <table class="table table-bordered table-hover">
+            <thead class="text-center">
+                <tr>
+                    <th scope="col">Ragione sociale</th>
+                    <th scope="col">Indirizzo</th>
+                    <th scope="col">Referente aziendale</th>
+                    <th scope="col">Telefono</th>
+                    <th scope="col">Email</th>
+                </tr>
+            </thead>
+            <tbody class="text-center">
+                {% for company in company_list %}
+                    {% ifchanged %}
+                        <tr>
+                        <td class="bg-light text-left pl-5" colspan="5"><h4>Settore {{ company.sector }}</h4></td>
+                        </tr>
+                    {% endifchanged %}
+                    <tr>
+                        <th scope="row"><a href="{% url 'company-detail' company.pk%}">{{ company.name }}</a></th>
+                        <td>{% if company.operational_headquarters_address %}{{ company.operational_headquarters_address }}{% endif %} {% if company.operational_headquarters_city %}, {{ company.operational_headquarters_city }}{% endif %}</td>
+                        <td>{% if company.company_contact %}{{ company.company_contact }} {% endif %}</td>
+                        <td>{% if company.telephone %}{{ company.telephone }}{% endif %}</td>
+                        <td>{% if company.email %}{{ company.email }}{% endif %}</td>
+                    </tr>
+                {% endfor %}
+            </tbody>
+        </table>
+    </div>
+
+
+
+{% endblock content %}
+
+
+
+
+<!--                        <img src="{{ sezione.logo_sezione.url }}" style="max-width:100%">-->

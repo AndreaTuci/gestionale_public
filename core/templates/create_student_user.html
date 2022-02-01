@@ -1,0 +1,39 @@
+{% extends 'base.html' %}
+{% load crispy_forms_tags %}
+
+
+{% block content %}
+    <div class="border p-3 bg-light my-3">
+    <h4 class="my-3 text-info"><strong>Crea le credenziali per un corso</strong></h4>
+    <p>Compila il form qui sotto e premi sul pulsante Salva</p>
+    </div>
+    {% if message %}
+        <div class="alert-success p-3 m-2">{{ message }}</div>
+    {% endif %}
+    {% if list %}
+        {% for i in list %}
+            <div class="alert-success p-3 m-2">{{ i }}</div>
+        {% endfor %}
+    {% endif %}
+    {% if error %}
+        <div class="alert-danger p-3 m-2">{{ error }}</div>
+    {% endif %}
+<form method="POST" id="studentForm" name="studentForm" enctype="multipart/form-data" class="mb-5 ml-3">
+    {% csrf_token %}
+    {{ form|crispy }}
+    <!--<label class="mr-2" for="username">Codice fiscale: </label><input type="text" name="username" id="username">-->
+    <button type="submit" class="btn btn btn-outline-dark ml-auto">Salva</button>
+</form>
+    <!--
+    <script>
+        function validateForm() {
+            let x = document.forms["studentForm"]["username"].value;
+            if (x.length !== 16) {
+                alert("Il codice fiscale deve essere lungo 16 caratteri!");
+                return false;
+            }
+        }
+    </script>-->
+
+
+{% endblock content %}

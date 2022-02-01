@@ -1,0 +1,18 @@
+{% extends 'base.html' %}
+{% load crispy_forms_tags %}
+
+{% block content %}
+    <h4 class="mt-3">Modifica orario di entrata/uscita</h4>
+    <h5 class="border-top pt-3"><strong>{{ entry.employee.name }} {{ entry.employee.surname }}</strong></h5>
+    <p class="border-bottom pb-3"><strong>{{ entry.get_in_out_display }}</strong> del {{ entry.entry_date }}
+        <br>
+    Orario registrato: {{ entry.entry_time }}</p>
+<form method="POST" enctype="multipart/form-data" class="mt-1 p-0 mb-5">
+    {% csrf_token %}
+    <div class="form-group form-inline">
+        <label class="h5" for="time">Nuovo orario: </label>
+        <input class="input-group ml-3" type="time" min="07:00" max="24:00" name="time" id="time">
+        <button type="submit" class="btn btn btn-outline-dark rounded-0 ml-3">Salva</button>
+    </div>
+</form>
+{% endblock content %}

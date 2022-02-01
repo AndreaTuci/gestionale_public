@@ -1,0 +1,1 @@
+BACKOFFICE = ['Tutor', 'Coordinamento', 'Segreteria', 'Direzione']

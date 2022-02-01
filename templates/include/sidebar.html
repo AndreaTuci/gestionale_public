@@ -1,0 +1,96 @@
+<!-- sidebar -->
+{% if user.profile.active %}
+<div id = 'sidebar' class="sidebar border-right d-print-none">
+    {% if 'anagrafica.view_course' in request.user.get_all_permissions %}
+    <div class="row border text-info mx-0">
+        <div class="col-2">
+            <i class="fal fa-users-class fa-2x px-4 py-3"></i>
+        </div>
+        <div class="col-2">
+            <a class="nav-link h3 ml-3 mr-2" href="{% url 'course-list'%}">Registri</a>
+        </div>
+    </div>
+    {% endif %}
+    {% if 'anagrafica.change_staff' in request.user.get_all_permissions %}
+    <div class="row border text-info mx-0">
+        <div class="col-2">
+            <i class="fal fa-chalkboard-teacher fa-2x px-4 py-3"></i>
+        </div>
+        <div class="col-2">
+            <a class="nav-link h3 ml-3 mr-2" href="{% url 'teacher-list'%}">Personale</a>
+        </div>
+    </div>
+    {% endif %}
+    {% if 'anagrafica.change_trainingunit' in request.user.get_all_permissions %}
+    <div class="row border text-info mx-0">
+        <div class="col-2">
+            <i class="fal fa-sitemap fa-2x px-4 py-3"></i>
+        </div>
+        <div class="col-2">
+            <a class="nav-link h3 ml-3 mr-2" href="{% url 'trainingunit-list'%}">UF</a>
+        </div>
+    </div>
+    {% endif %}
+    {% if 'anagrafica.view_company' in request.user.get_all_permissions %}
+    <div class="row border text-info mx-0">
+        <div class="col-2">
+            <i class="fal fa-building fa-2x px-4 py-3"></i>
+        </div>
+        <div class="col-2">
+            <a class="nav-link h3 ml-3 mr-2" href="{% url 'company-list'%}">Ditte</a>
+        </div>
+    </div>
+    {% endif %}
+    {%  if 'anagrafica.view_stage' in request.user.get_all_permissions %}
+        <div class="row border text-info mx-0">
+            <div class="col-2">
+                <i class="fal fa-briefcase fa-2x px-4 py-3"></i>
+            </div>
+            <div class="col-2">
+                <a class="nav-link h3 ml-3 mr-2" href="{% url 'stage-list'%}">Stage</a>
+            </div>
+        </div>
+    {% endif %}
+    {%  if 'amministrazione.view_teacheragreement' in request.user.get_all_permissions %}
+        <div class="row border text-info mx-0">
+            <div class="col-2">
+                <i class="fal fa-file-contract fa-2x px-4 py-3"></i>
+            </div>
+            <div class="col-2">
+                <a class="nav-link h3 ml-3 mr-2" href="{% url 'teacher-agreement-list'%}">Contratti</a>
+            </div>
+        </div>
+    {% endif %}
+{%  if 'frequenze.view_lessonwithdate' in request.user.get_all_permissions %}
+    <div class="row border text-info mx-0">
+        <div class="col-2">
+            <i class="fal fa-clock fa-2x px-4 py-3"></i>
+        </div>
+        <div class="col-2">
+            <a class="nav-link h3 ml-3 mr-2" href="{% url 'new-lesson-choose-course' %}">Orario</a>
+        </div>
+    </div>
+    {% endif %}
+    {% for group in request.user.groups.all %}
+    {%  if group.name == 'Tutor' or group.name == 'Segreteria' or group.name == 'Coordinamento'%}
+    <div class="row border text-info mx-0">
+        <div class="col-2">
+            <i class="fal fa-desktop fa-2x px-4 py-3"></i>
+        </div>
+        <div class="col-2">
+            <a class="nav-link h3 ml-3 mr-2" href="{% url 'student-log-upload'%}">FAD</a>
+        </div>
+    </div>
+    <div class="row border text-info mx-0">
+        <div class="col-2">
+            <i class="fal fa-boxes fa-2x px-4 py-3"></i>
+        </div>
+        <div class="col-2">
+            <a class="nav-link h3 ml-3 mr-2" href="{% url 'warehouse-list' %}">Magazzino</a>
+        </div>
+    </div>
+    {% endif %}
+    {% endfor %}
+
+</div>
+{% endif %}
